@@ -6,10 +6,30 @@
 //
 
 import SwiftUI
-
+ 
 struct HomeScreen: View {
+    @State var name : String = "User"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack {
+                Spacer()
+                Text("Hello, \(name)")
+                    .fontWeight(.bold)
+                    .padding()
+                NavigationLink(destination: SignInScreen()) {
+                    Text("Sign In")
+                        .foregroundColor(.blue)
+                        .padding()
+                }
+                NavigationLink(destination: SignUpScreen()) {
+                    Text("Sign Up")
+                        .foregroundColor(.blue)
+                        .padding()
+                }
+                Spacer()
+            }
+        }
     }
 }
 
