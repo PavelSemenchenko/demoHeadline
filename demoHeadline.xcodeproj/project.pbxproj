@@ -37,6 +37,8 @@
 		2A6A04342C0F9BBB001BC675 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6A04332C0F9BBB001BC675 /* FirebaseStorage */; };
 		2A6A04362C0F9BBB001BC675 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6A04352C0F9BBB001BC675 /* FirebaseStorageCombine-Community */; };
 		2A6A04382C0F9BBB001BC675 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6A04372C0F9BBB001BC675 /* FirebaseVertexAI-Preview */; };
+		2A6A043B2C0FA417001BC675 /* EmailTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A043A2C0FA417001BC675 /* EmailTextField.swift */; };
+		2A6A043D2C0FA439001BC675 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A043C2C0FA439001BC675 /* PasswordTextField.swift */; };
 		2AB25AC42C0E550600DAEDC7 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB25AC32C0E550600DAEDC7 /* NavigationRouter.swift */; };
 		2AB25AC62C0E5C1300DAEDC7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB25AC52C0E5C1300DAEDC7 /* FirebaseAnalytics */; };
 		2AB25AC82C0E5C1300DAEDC7 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB25AC72C0E5C1300DAEDC7 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -86,6 +88,8 @@
 /* Begin PBXFileReference section */
 		2A6A03FD2C0F961A001BC675 /* SignButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignButton.swift; sourceTree = "<group>"; };
 		2A6A03FF2C0F9B68001BC675 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2A6A043A2C0FA417001BC675 /* EmailTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTextField.swift; sourceTree = "<group>"; };
+		2A6A043C2C0FA439001BC675 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		2AB25AC32C0E550600DAEDC7 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		2AFD1D0F2C0D056F00C5EAC8 /* demoHeadline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demoHeadline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AFD1D122C0D056F00C5EAC8 /* demoHeadlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demoHeadlineApp.swift; sourceTree = "<group>"; };
@@ -172,6 +176,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A6A04392C0FA3F9001BC675 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				2A6A03FD2C0F961A001BC675 /* SignButton.swift */,
+				2A6A043A2C0FA417001BC675 /* EmailTextField.swift */,
+				2A6A043C2C0FA439001BC675 /* PasswordTextField.swift */,
+			);
+			path = Elements;
+			sourceTree = "<group>";
+		};
 		2AFD1D062C0D056F00C5EAC8 = {
 			isa = PBXGroup;
 			children = (
@@ -198,9 +212,9 @@
 				2AFD1D652C0D078600C5EAC8 /* SignUpScreen.swift */,
 				2AFD1D5F2C0D072E00C5EAC8 /* ForgotPasswordScreen.swift */,
 				2AB25AC32C0E550600DAEDC7 /* NavigationRouter.swift */,
-				2A6A03FD2C0F961A001BC675 /* SignButton.swift */,
 				2AFD1D672C0D0A4700C5EAC8 /* AuthVM.swift */,
 				2AFD1D5D2C0D070C00C5EAC8 /* PrivacyScreen.swift */,
+				2A6A04392C0FA3F9001BC675 /* Elements */,
 				2AFD1D162C0D057100C5EAC8 /* Assets.xcassets */,
 				2A6A03FF2C0F9B68001BC675 /* GoogleService-Info.plist */,
 				2AFD1D182C0D057100C5EAC8 /* Preview Content */,
@@ -355,6 +369,8 @@
 			files = (
 				2A6A03FE2C0F961A001BC675 /* SignButton.swift in Sources */,
 				2AFD1D622C0D074C00C5EAC8 /* SplashScreen.swift in Sources */,
+				2A6A043D2C0FA439001BC675 /* PasswordTextField.swift in Sources */,
+				2A6A043B2C0FA417001BC675 /* EmailTextField.swift in Sources */,
 				2AFD1D5E2C0D070C00C5EAC8 /* PrivacyScreen.swift in Sources */,
 				2AFD1D602C0D072E00C5EAC8 /* ForgotPasswordScreen.swift in Sources */,
 				2AFD1D662C0D078600C5EAC8 /* SignUpScreen.swift in Sources */,

@@ -10,9 +10,9 @@ import SwiftUI
 struct SignInScreen: View {
     @EnvironmentObject private var authVM : AuthVM
     @EnvironmentObject private var navigationVM : NavigationRouter
-    @State var name: String = ""
-    @State var password: String = ""
-    @State var isSecure: Bool = true
+    @State var name = ""
+    @State var password = ""
+    @State var isSecure = true
     @State var phoneNumber: String = "+380"
     
     @FocusState private var focusedField: Field?
@@ -33,7 +33,15 @@ struct SignInScreen: View {
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
                     .padding()
-                TextField("Email address", text: $authVM.email)
+                
+                EmailTextField(valid: true, placeholder: "Email address", text: $authVM.email)
+                    .focused($focusedField, equals: .name)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        focusedField = .password
+                    }
+                /*
+                TextField("", text: $authVM.email)
                     .padding()
                     .frame(height: 44)
                     .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white, lineWidth: 1))
@@ -42,7 +50,7 @@ struct SignInScreen: View {
                     .submitLabel(.next)
                     .onSubmit {
                         focusedField = .password
-                    }
+                    }*/
                 
                 if isSecure {
                     SecureField("Password", text: $authVM.password)
