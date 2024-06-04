@@ -9,11 +9,21 @@ import SwiftUI
  
 struct HomeScreen: View {
     @State var name : String = "User"
+    @StateObject private var authViewModel = AuthVM()
     
     var body: some View {
         NavigationStack {
             VStack {
+                
+                    Text("User ID: \(authViewModel.userID ?? "")")
+                        .padding()
+                    
+                    Button("Sign Out") {
+                        authViewModel.signOut()
+                    }
+                
                 Spacer()
+                
                 Text("Hello, \(name)")
                     .fontWeight(.bold)
                     .padding()

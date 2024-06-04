@@ -81,8 +81,8 @@ struct SignUpScreen: View {
                         }
                     }
                 }.background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
-                .padding()
-                                
+                    .padding()
+                
                 if isSecure {
                     SecureField("Password", text: $password)
                         .padding()

@@ -12,7 +12,7 @@ struct SplashScreen: View {
     @State private var navigateToNextScreen = false
     
     var body: some View {
-        NavigationView { // Оборачиваем контент в NavigationView
+        NavigationView { 
             ZStack {
                 LinearGradient(colors: [Color(red: 70/255, green: 70/255, blue: 70/255),
                                         Color(red: 200/255, green: 200/255, blue: 200/255),
@@ -41,7 +41,7 @@ struct SplashScreen: View {
                     logoOpacity = 1.0
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                   // navigateToNextScreen = true
+                    navigateToNextScreen = true
                 }
             }
             .background(NavigationLink(destination: SignInScreen(), isActive: $navigateToNextScreen) { EmptyView() })

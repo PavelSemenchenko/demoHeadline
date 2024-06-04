@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SignInScreen: View {
-    
+    @StateObject private var authViewModel = AuthVM()
+    @StateObject var navigationVM = NavigationRouter()
     @State var name: String = ""
     @State var password: String = ""
     @State var isSecure: Bool = true
@@ -20,6 +21,7 @@ struct SignInScreen: View {
         case password
         case phoneNumber
     }
+    
     @State private var showingPrivacyScreen = false
     @State private var authenticationFailed = false
     
@@ -31,7 +33,7 @@ struct SignInScreen: View {
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
                     .padding()
-                TextField("Phone number, username or email address", text: $name)
+                TextField("Email address", text: $authViewModel.email)
                     .padding()
                     .frame(height: 44)
                     .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white, lineWidth: 1))
@@ -43,7 +45,7 @@ struct SignInScreen: View {
                     }
                 
                 if isSecure {
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $authViewModel.password)
                         .padding()
                         .overlay(
                             HStack {
@@ -61,12 +63,12 @@ struct SignInScreen: View {
                         .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white, lineWidth: 1))
                         .padding(.horizontal)
                         .focused($focusedField, equals: .password)
-                        .submitLabel(.next)
+                        .submitLabel(.done)
                         .onSubmit {
-                            focusedField = .phoneNumber
+                            focusedField = nil
                         }
                 } else {
-                    TextField("Password", text: $password)
+                    TextField("Password", text: $authViewModel.password)
                         .padding()
                         .overlay(
                             HStack {
@@ -84,43 +86,31 @@ struct SignInScreen: View {
                         .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white, lineWidth: 1))
                         .padding(.horizontal)
                         .focused($focusedField, equals: .password)
-                        .submitLabel(.next)
+                        .submitLabel(.done)
                         .onSubmit {
-                            focusedField = .phoneNumber
+                            focusedField = nil
                         }
                 }
-                /*
-                 TextField("Phone Number", text: $phoneNumber)
-                 .keyboardType(.numberPad)
-                 .padding()
-                 .frame(height: 44)
-                 .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.gray, lineWidth: 1))
-                 .padding(.horizontal)
-                 .focused($focusedField, equals: .phoneNumber) // Привязка к состоянию фокуса
-                 //.submitLabel(.done)
-                 .toolbar {
-                 ToolbarItemGroup(placement: .keyboard) {
-                 Spacer()
-                 Button("Done") {
-                 // Закрытие клавиатуры и переход на другой экран
-                 focusedField = nil
-                 //showingNextScreen = true
-                 }
-                 }
-                 }
-                 */
-                NavigationLink(destination: SignUpScreen()) {
+                NavigationLink(destination: ForgotPasswordScreen()) {
                     Text("Forgot password ?")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(red: 0.75, green: 0.75, blue: 0.75))
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
                 
                 
                 Spacer().frame(maxHeight: 20)
+                
                 HStack {
                     Spacer()
-                    NavigationLink(destination: SignInScreen()) {
+                    
+                    
+                    Button(action: {
+                        Task {
+                            await authViewModel.signIn()
+                            navigationVM.pushScreen(route: .home)
+                        }
+                    }) {
                         Text("Log In")
                             .foregroundColor(.white)
                             .padding()
@@ -129,94 +119,53 @@ struct SignInScreen: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(Color.blue)
                             )
-                            /*.overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.black, lineWidth: 2)
-                            )*/
                     }
-                    /*
-                     Spacer()
-                     */
-                    
-                    Spacer()
-                }.padding()
-                HStack{
-                    VStack{
+                        Spacer()
+                    }.padding()
+                    HStack{
+                        VStack{
+                            Rectangle()
+                                .fill(Color.white)
+                                .frame(height: 1)
+                        }
+                        Text("OR").foregroundStyle(Color.white)
                         Rectangle()
                             .fill(Color.white)
                             .frame(height: 1)
-                    }
-                    Text("OR").foregroundStyle(Color.white)
+                    }.padding()
+                Button("go", action: {
+                    navigationVM.pushScreen(route: .home)
+                })
+                    
+                    Spacer()
                     Rectangle()
                         .fill(Color.white)
                         .frame(height: 1)
-                }.padding()
-                
-                
-                Spacer()
-                Rectangle()
-                    .fill(Color.white)
-                    .frame(height: 1)
-                   
-                HStack{
-                    Text("Don't have an account?")
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.gray)
-                        .font(.system(size: 12))
                     
-                    NavigationLink(destination: SignUpScreen()) {
-                        Text("Sign Up")
-                            .foregroundColor(.white)
-                            .padding()
-                            //.padding()
-                            //.frame(width: UIScreen.main.bounds.width * 0.9)
-                        /*.background(
-                         RoundedRectangle(cornerRadius: 10)
-                         .fill(Color.blue)
-                         )
-                         .overlay(
-                         RoundedRectangle(cornerRadius: 10)
-                         .stroke(Color.black, lineWidth: 2)
-                         )*/
+                    HStack{
+                        Text("Don't have an account?")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.gray)
+                            .font(.system(size: 12))
+                        
+                        NavigationLink(destination: SignUpScreen()) {
+                            Text("Sign Up")
+                                .foregroundColor(.white)
+                                .padding()
+                        }
                     }
-                }//.padding()
-                /*
-                 HStack(spacing: 0) {
-                 Text("You agree with ")
-                 //.fontWeight(.bold)
-                 .foregroundColor(Color.gray)
-                 .font(.system(size: 12))
-                 
-                 Text("Terms of use,")
-                 .fontWeight(.bold)
-                 .underline()
-                 .font(.system(size: 12))
-                 .onTapGesture {
-                 if let url = URL(string: "https://headline.team") {
-                 UIApplication.shared.open(url)
-                 }
-                 }
-                 Text(" Privacy Policy")
-                 .fontWeight(.bold)
-                 .foregroundColor(Color.red)
-                 .font(.system(size: 12))
-                 .onTapGesture {
-                 showingPrivacyScreen = true
-                 }
-                 }
-                 .padding()*/
-            }.sheet(isPresented: $showingPrivacyScreen) {
-                PrivacyScreen()
+                }.sheet(isPresented: $showingPrivacyScreen) {
+                    PrivacyScreen()
+                }
+                .background(
+                    LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple, Color.red, Color.orange]),
+                                   startPoint: .topLeading, endPoint: .bottomTrailing)
+                )
+                .edgesIgnoringSafeArea(.all)
             }
-            .background(
-                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple, Color.red, Color.orange]),
-                               startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
-            .edgesIgnoringSafeArea(.all)
         }
     }
-}
-
-#Preview {
-    SignInScreen()
-}
+    
+    #Preview {
+        SignInScreen()
+    }
