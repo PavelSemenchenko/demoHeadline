@@ -114,7 +114,7 @@ struct SignInScreen: View {
                     
                     SignButton(text: "Log In", enabled: true, busy: false) {
                         Task {
-                            await authVM.signIn()
+                            await authVM.signIn(navigationVM: NavigationRouter())
                             print("+++++++++ \(authVM.userID)")
                             navigationVM.pushScreen(route: .home)
                         }

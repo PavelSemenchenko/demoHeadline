@@ -36,13 +36,16 @@ class AuthVM: ObservableObject {
         print(Auth.auth().currentUser?.uid)
         return Auth.auth().currentUser != nil
     }
-    @MainActor func signIn() async {
+    @MainActor func signIn(navigationVM: NavigationRouter) async {
         busy = true
         do {
-            let result = try? await Auth.auth().signIn(withEmail: email, password: password)
-            //go next
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            navigationVM.pushScreen(route: .home)
         } catch {
-            
+            errorMessage = "Ошибка входа: \(error.localizedDescription)"
+            //showError = true
+            //print("00000\(showError)")
+            print("\(#file) \(#function) \(error)")
         }
         busy = false
     }
