@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignInScreen: View {
     @StateObject private var authViewModel = AuthVM()
-    @StateObject var navigationVM = NavigationRouter()
+    @EnvironmentObject var navigationVM : NavigationRouter
     @State var name: String = ""
     @State var password: String = ""
     @State var isSecure: Bool = true
@@ -108,7 +108,8 @@ struct SignInScreen: View {
                     Button(action: {
                         Task {
                             await authViewModel.signIn()
-                            navigationVM.pushScreen(route: .home)
+                            //navigationVM.pushScreen(route: .home)
+                            navigationVM.pushHome()
                         }
                     }) {
                         Text("Log In")
@@ -133,9 +134,25 @@ struct SignInScreen: View {
                             .fill(Color.white)
                             .frame(height: 1)
                     }.padding()
-                Button("go", action: {
-                    navigationVM.pushScreen(route: .home)
-                })
+                NavigationLink("Show Detail View") {
+                    HomeScreen()
+                    //navigationVM.pushHome()
+                }
+                Button(action: {
+                    Task {
+                        await authViewModel.signIn()
+                        navigationVM.pushScreen(route: .home)
+                    }
+                    print("----- is auth \(authViewModel.isAuthenticated)")
+                }) {
+                    Text("go2")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                    
+                }
                     
                     Spacer()
                     Rectangle()
@@ -165,7 +182,7 @@ struct SignInScreen: View {
             }
         }
     }
-    
+    /*
     #Preview {
         SignInScreen()
-    }
+    }*/

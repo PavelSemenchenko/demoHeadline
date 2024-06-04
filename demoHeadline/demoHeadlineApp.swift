@@ -57,6 +57,7 @@ struct demoHeadlineApp: App {
                             }
                     }.environmentObject(navigationVM)
                         .environmentObject(authVM)
+                        
                 }
             //}.environmentObject(navigationVM)
         }
