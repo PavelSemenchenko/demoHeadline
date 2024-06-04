@@ -15,15 +15,12 @@ struct ForgotPasswordScreen: View {
         VStack {
             Text("Введите ваш email для сброса пароля")
             
-            TextField("Email", text: $email)
+            TextField("Email", text: $loginVM.email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
             Button(action: {
                 loginVM.forgotPassword(email: email)
-                // Выполните здесь логику сброса пароля
-                // В этом примере мы просто выведем в консоль email для сброса пароля.
-                print("Запрос на сброс пароля для email: \(email)")
             }) {
                 Text("Сбросить пароль")
                     .frame(maxWidth: .infinity)
@@ -39,5 +36,5 @@ struct ForgotPasswordScreen: View {
 }
 
 #Preview {
-    ForgotPasswordScreen()
+    ForgotPasswordScreen().environmentObject(AuthVM())
 }
