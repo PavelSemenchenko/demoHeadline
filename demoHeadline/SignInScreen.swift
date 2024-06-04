@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SignInScreen: View {
-    @EnvironmentObject var authViewModel : AuthVM
-    @EnvironmentObject var navigationVM : NavigationRouter
+    @EnvironmentObject private var authVM : AuthVM
+    @EnvironmentObject private var navigationVM : NavigationRouter
     @State var name: String = ""
     @State var password: String = ""
     @State var isSecure: Bool = true
@@ -33,7 +33,7 @@ struct SignInScreen: View {
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
                     .padding()
-                TextField("Email address", text: $authViewModel.email)
+                TextField("Email address", text: $authVM.email)
                     .padding()
                     .frame(height: 44)
                     .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white, lineWidth: 1))
@@ -45,7 +45,7 @@ struct SignInScreen: View {
                     }
                 
                 if isSecure {
-                    SecureField("Password", text: $authViewModel.password)
+                    SecureField("Password", text: $authVM.password)
                         .padding()
                         .overlay(
                             HStack {
@@ -68,7 +68,7 @@ struct SignInScreen: View {
                             focusedField = nil
                         }
                 } else {
-                    TextField("Password", text: $authViewModel.password)
+                    TextField("Password", text: $authVM.password)
                         .padding()
                         .overlay(
                             HStack {
@@ -104,22 +104,12 @@ struct SignInScreen: View {
                 HStack {
                     Spacer()
                     
-                    
-                    Button(action: {
+                    SignButton(text: "Log In", enabled: true, busy: false) {
                         Task {
-                            await authViewModel.signIn()
+                            await authVM.signIn()
+                            print("+++++++++ \(authVM.userID)")
                             navigationVM.pushScreen(route: .home)
-                            //navigationVM.pushHome()
                         }
-                    }) {
-                        Text("Log In")
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(width: UIScreen.main.bounds.width * 0.9)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.blue)
-                            )
                     }
                         Spacer()
                     }.padding()
@@ -138,22 +128,7 @@ struct SignInScreen: View {
                     HomeScreen()
                     //navigationVM.pushHome()
                 }
-                Button(action: {
-                    Task {
-                        await authViewModel.signIn()
-                        navigationVM.pushScreen(route: .home)
-                    }
-                    print("----- is auth \(authViewModel.isAuthenticated)")
-                }) {
-                    Text("go2")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                    
-                }
-                    
+                
                     Spacer()
                     Rectangle()
                         .fill(Color.white)
