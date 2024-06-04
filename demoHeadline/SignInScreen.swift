@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignInScreen: View {
-    @StateObject private var authViewModel = AuthVM()
+    @EnvironmentObject var authViewModel : AuthVM
     @EnvironmentObject var navigationVM : NavigationRouter
     @State var name: String = ""
     @State var password: String = ""
@@ -26,7 +26,7 @@ struct SignInScreen: View {
     @State private var authenticationFailed = false
     
     var body: some View {
-        NavigationStack {
+        //NavigationStack {
             VStack {
                 Spacer()
                 Text("Wellcome back")
@@ -108,8 +108,8 @@ struct SignInScreen: View {
                     Button(action: {
                         Task {
                             await authViewModel.signIn()
-                            //navigationVM.pushScreen(route: .home)
-                            navigationVM.pushHome()
+                            navigationVM.pushScreen(route: .home)
+                            //navigationVM.pushHome()
                         }
                     }) {
                         Text("Log In")
@@ -179,10 +179,12 @@ struct SignInScreen: View {
                                    startPoint: .topLeading, endPoint: .bottomTrailing)
                 )
                 .edgesIgnoringSafeArea(.all)
-            }
+            //}
         }
     }
-    /*
+    
     #Preview {
         SignInScreen()
-    }*/
+            .environmentObject(NavigationRouter())
+                    .environmentObject(AuthVM())
+    }
