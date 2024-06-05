@@ -9,7 +9,8 @@ import SwiftUI
  
 struct HomeScreen: View {
     @State var name : String = "User"
-    @StateObject private var authVM = AuthVM()
+    @EnvironmentObject private var authVM : AuthVM
+    @EnvironmentObject private var navigationVM : NavigationRouter
     
     var body: some View {
         NavigationStack {
@@ -25,6 +26,8 @@ struct HomeScreen: View {
                     
                     Button("Sign Out") {
                         authVM.signOut()
+                        navigationVM.popUntilSignInScreen()
+                        
                     }
                 
                 Spacer()
@@ -49,5 +52,11 @@ struct HomeScreen: View {
 }
 
 #Preview {
-    HomeScreen()
+    // Создаем временные данные для предварительного просмотра
+    let authVM = AuthVM()
+    let navigationVM = NavigationRouter()
+    
+    return HomeScreen()
+        .environmentObject(authVM)
+        .environmentObject(navigationVM)
 }
