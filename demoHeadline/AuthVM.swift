@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseAuthCombineSwift
 
 class AuthVM: ObservableObject {
     @Published var email: String = "test@test.com"
@@ -36,10 +37,27 @@ class AuthVM: ObservableObject {
         print(Auth.auth().currentUser?.uid)
         return Auth.auth().currentUser != nil
     }
+    
+    func signIn() async {
+            do {
+                let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+                DispatchQueue.main.async {
+                    self.isAuthenticated = true
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                    self.isAuthenticated = false
+                }
+            }
+        }
+    
+    /*
     @MainActor func signIn(navigationVM: NavigationRouter) async {
         busy = true
         do {
-            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            //let result =
+            try await Auth.auth().signIn(withEmail: email, password: password)
             navigationVM.pushScreen(route: .home)
         } catch {
             errorMessage = "Ошибка входа: \(error.localizedDescription)"
@@ -49,6 +67,7 @@ class AuthVM: ObservableObject {
         }
         busy = false
     }
+     */
 
     @MainActor func signOut() {
         do {

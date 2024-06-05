@@ -111,14 +111,41 @@ struct SignInScreen: View {
                 
                 HStack {
                     Spacer()
-                    
+                    SignButton(text: "Log In", enabled: authVM.canLogin, busy: authVM.busy) {
+                        Task {
+                            await authVM.signIn()
+                            print("+++++++++ \(authVM.userID)")
+                            if authVM.isAuthenticated {
+                                navigationVM.pushScreen(route: .home)
+                            }
+                        }
+                    }
+                    /*
+                    Button(action: {
+                                    Task {
+                                        await authVM.signIn()
+                                        print("+++++++++ \(authVM.userID)")
+                                        if authVM.isAuthenticated {
+                                            navigationVM.pushScreen(route: .home)
+                                        }
+                                    }
+                                }) {
+                                    Text("Log In")
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue))
+                                        .frame(maxWidth: .infinity)
+                                }
+                                .disabled(authVM.email.isEmpty || authVM.password.isEmpty)
+                                .padding()*/
+                    /*
                     SignButton(text: "Log In", enabled: true, busy: false) {
                         Task {
                             await authVM.signIn(navigationVM: NavigationRouter())
                             print("+++++++++ \(authVM.userID)")
                             navigationVM.pushScreen(route: .home)
                         }
-                    }
+                    }*/
                         Spacer()
                     }.padding()
                     HStack{
