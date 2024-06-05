@@ -26,12 +26,13 @@ struct demoHeadlineApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $navigationVM.currentRoute) {
+            //NavigationStack(path: $navigationVM.currentRoute) {
                 if authVM.isAuthenticated {
                     HomeScreen()
                         .environmentObject(navigationVM)
                         .environmentObject(authVM)
                 } else {
+                    NavigationStack(path: $navigationVM.currentRoute) {
                     SplashScreen()
                         .navigationDestination(for: NavigationRoute.self) { route in
                             switch route {
@@ -51,9 +52,10 @@ struct demoHeadlineApp: App {
                                     .environmentObject(authVM)
                             }
                         }
-                }
-            }.environmentObject(navigationVM)
-                .environmentObject(authVM)
+                }.environmentObject(navigationVM)
+                        .environmentObject(authVM)
+            }//.environmentObject(navigationVM)
+                //.environmentObject(authVM)
         }
     }
 }

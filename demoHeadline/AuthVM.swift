@@ -92,14 +92,18 @@ class AuthVM: ObservableObject {
      }
      */
     
-    @MainActor func signOut() {
-        do {
-            try Auth.auth().signOut()
-            isAuthenticated = false
-            userID = nil
-        } catch {
-            errorMessage = error.localizedDescription
+    func signOut(navigationVM: NavigationRouter) {
+            do {
+                try Auth.auth().signOut()
+                isAuthenticated = false
+                userID = nil
+                saveAuthState()
+                DispatchQueue.main.async {
+                    navigationVM.popUntilSignInScreen()
+                }
+            } catch {
+                errorMessage = error.localizedDescription
+            }
         }
-    }
 }
 

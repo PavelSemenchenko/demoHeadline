@@ -25,8 +25,7 @@ struct HomeScreen: View {
                             }
                     
                     Button("Sign Out") {
-                        authVM.signOut()
-                        navigationVM.popUntilSignInScreen()
+                        authVM.signOut(navigationVM: navigationVM)
                         
                     }
                 
