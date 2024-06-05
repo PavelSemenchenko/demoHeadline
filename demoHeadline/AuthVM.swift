@@ -17,7 +17,19 @@ class AuthVM: ObservableObject {
     @Published var userID: String?
     @Published var busy: Bool = false    //@ObservableObject var authViewModel = AuthVM()
     //@StateObject var navigationVM = NavigationRouter()
-
+    
+    init() {
+        loadAuthState()
+    }
+    private func saveAuthState() {
+        UserDefaults.standard.set(isAuthenticated, forKey: "isAuthenticated")
+        UserDefaults.standard.set(userID, forKey: "userID")
+    }
+    
+    private func loadAuthState() {
+        isAuthenticated = UserDefaults.standard.bool(forKey: "isAuthenticated")
+        userID = UserDefaults.standard.string(forKey: "userID")
+    }
     var isEmailCorrect: Bool {
         email.contains("@")
     }
@@ -39,45 +51,47 @@ class AuthVM: ObservableObject {
     }
     
     func signIn() async {
-            do {
-                let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
-                DispatchQueue.main.async {
-                    self.isAuthenticated = true
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isAuthenticated = false
-                }
+        do {
+            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            DispatchQueue.main.async {
+                self.isAuthenticated = true
+                self.userID = authResult.user.uid
+                self.saveAuthState()
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = error.localizedDescription
+                self.isAuthenticated = false
             }
         }
+    }
     func getCurrentUserID() -> String? {
-            if let userID = Auth.auth().currentUser?.uid {
-                print("User ID: \(userID)")
-                return userID
-            } else {
-                print("No user is currently signed in.")
-                return nil
-            }
+        if let userID = Auth.auth().currentUser?.uid {
+            print("User ID: \(userID)")
+            return userID
+        } else {
+            print("No user is currently signed in.")
+            return nil
         }
+    }
     
     /*
-    @MainActor func signIn(navigationVM: NavigationRouter) async {
-        busy = true
-        do {
-            //let result =
-            try await Auth.auth().signIn(withEmail: email, password: password)
-            navigationVM.pushScreen(route: .home)
-        } catch {
-            errorMessage = "Ошибка входа: \(error.localizedDescription)"
-            //showError = true
-            //print("00000\(showError)")
-            print("\(#file) \(#function) \(error)")
-        }
-        busy = false
-    }
+     @MainActor func signIn(navigationVM: NavigationRouter) async {
+     busy = true
+     do {
+     //let result =
+     try await Auth.auth().signIn(withEmail: email, password: password)
+     navigationVM.pushScreen(route: .home)
+     } catch {
+     errorMessage = "Ошибка входа: \(error.localizedDescription)"
+     //showError = true
+     //print("00000\(showError)")
+     print("\(#file) \(#function) \(error)")
+     }
+     busy = false
+     }
      */
-
+    
     @MainActor func signOut() {
         do {
             try Auth.auth().signOut()
