@@ -189,6 +189,7 @@ struct SignInScreen: View {
                                    startPoint: .topLeading, endPoint: .bottomTrailing)
                 )
                 .edgesIgnoringSafeArea(.all)
+                .navigationBarBackButtonHidden(true)
             //}
         }
     }
