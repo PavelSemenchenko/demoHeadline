@@ -9,17 +9,22 @@ import SwiftUI
  
 struct HomeScreen: View {
     @State var name : String = "User"
-    @StateObject private var authViewModel = AuthVM()
+    @StateObject private var authVM = AuthVM()
     
     var body: some View {
         NavigationStack {
             VStack {
                 
-                    Text("User ID: \(authViewModel.userID ?? "")")
-                        .padding()
+                if let userID = authVM.userID {
+                                Text("User ID: \(userID)")
+                                    .padding()
+                            } else {
+                                Text("No user ID available")
+                                    .padding()
+                            }
                     
                     Button("Sign Out") {
-                        authViewModel.signOut()
+                        authVM.signOut()
                     }
                 
                 Spacer()

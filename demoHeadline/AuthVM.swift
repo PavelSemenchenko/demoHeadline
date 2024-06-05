@@ -51,6 +51,15 @@ class AuthVM: ObservableObject {
                 }
             }
         }
+    func getCurrentUserID() -> String? {
+            if let userID = Auth.auth().currentUser?.uid {
+                print("User ID: \(userID)")
+                return userID
+            } else {
+                print("No user is currently signed in.")
+                return nil
+            }
+        }
     
     /*
     @MainActor func signIn(navigationVM: NavigationRouter) async {
