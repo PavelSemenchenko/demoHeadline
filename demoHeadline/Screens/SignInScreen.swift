@@ -34,7 +34,7 @@ struct SignInScreen: View {
                     .fontWeight(.bold)
                     .padding()
                 
-                EmailTextField(valid: true, placeholder: "Email address", text: $authVM.email)
+                EmailTextField(valid: authVM.isEmailCorrect, placeholder: "Email address", text: $authVM.email)
                     .focused($focusedField, equals: .name)
                     .submitLabel(.next)
                     .onSubmit {
@@ -120,32 +120,6 @@ struct SignInScreen: View {
                             }
                         }
                     }
-                    /*
-                    Button(action: {
-                                    Task {
-                                        await authVM.signIn()
-                                        print("+++++++++ \(authVM.userID)")
-                                        if authVM.isAuthenticated {
-                                            navigationVM.pushScreen(route: .home)
-                                        }
-                                    }
-                                }) {
-                                    Text("Log In")
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.blue))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                .disabled(authVM.email.isEmpty || authVM.password.isEmpty)
-                                .padding()*/
-                    /*
-                    SignButton(text: "Log In", enabled: true, busy: false) {
-                        Task {
-                            await authVM.signIn(navigationVM: NavigationRouter())
-                            print("+++++++++ \(authVM.userID)")
-                            navigationVM.pushScreen(route: .home)
-                        }
-                    }*/
                         Spacer()
                     }.padding()
                     HStack{

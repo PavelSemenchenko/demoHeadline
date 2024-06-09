@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SignUpScreen: View {
+    @EnvironmentObject private var authVM : AuthVM
+    @EnvironmentObject private var navigationVM : NavigationRouter
     
     @State var name: String = ""
     @State var password: String = ""
@@ -33,7 +35,7 @@ struct SignUpScreen: View {
                     .fontWeight(.bold)
                     .padding()
                 
-                TextField("Username or email address", text: $name)
+                TextField("Username or email address", text: $authVM.displayName)
                     .padding()
                     .frame(height: 44)
                     .background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
@@ -84,7 +86,7 @@ struct SignUpScreen: View {
                     .padding()
                 
                 if isSecure {
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $authVM.password)
                         .padding()
                         .overlay(
                             HStack {
@@ -107,7 +109,7 @@ struct SignUpScreen: View {
                             focusedField = nil
                         }
                 } else {
-                    TextField("Password", text: $password)
+                    TextField("Password", text: $authVM.password)
                     //.foregroundColor(.white)
                         .padding()
                         .overlay(
@@ -135,16 +137,24 @@ struct SignUpScreen: View {
                 Spacer().frame(maxHeight: 20)
                 HStack {
                     Spacer()
-                    NavigationLink(destination: SignUpScreen()) {
-                        Text("Sign Up")
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(width: UIScreen.main.bounds.width * 0.9)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.blue)
-                            )
-                    }
+                    SignButton(text: "Sign Up", enabled: authVM.canSignUp, busy: authVM.busy) {
+                        Task {
+                            await authVM.signUp()
+                            if authVM.isAuthenticated {
+                                navigationVM.pushScreen(route: .home)
+                            }
+                        }
+                    }/*
+                      NavigationLink(destination: SignUpScreen()) {
+                      Text("Sign Up")
+                      .foregroundColor(.white)
+                      .padding()
+                      .frame(width: UIScreen.main.bounds.width * 0.9)
+                      .background(
+                      RoundedRectangle(cornerRadius: 10)
+                      .fill(Color.blue)
+                      )
+                      }*/
                     
                     Spacer()
                 }.padding()
