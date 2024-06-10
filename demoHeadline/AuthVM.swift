@@ -57,19 +57,39 @@ class AuthVM: ObservableObject {
         print(Auth.auth().currentUser?.uid)
         return Auth.auth().currentUser != nil
     }
-    /*
+    
     @MainActor func signUp() async {
         busy = true
         do {
-            let result = try? await Auth.auth().createUser(withEmail: email, password: password)
-           print("++++++++++ user have been created +++++++")
-            print("\(Auth.auth().currentUser?.uid)")
-        } catch {
+            let result = try await Auth.auth().createUser(withEmail: email, password: password)
+            let newUser = UserEntity(id: result.user.uid, email: email, name: name, createdAt: Date())
+            try await db.collection("profiles").document(newUser.id!).setData(newUser.toDictionary())
             
+            // Установка значения name после успешной регистрации
+            DispatchQueue.main.async {
+                self.isAuthenticated = true
+                self.userID = newUser.id
+                self.name = newUser.name // Установка имени пользователя
+                self.currentUser = newUser
+                self.saveAuthState()
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = error.localizedDescription
+            }
         }
         busy = false
-    }*/
-    
+    }
+    @MainActor func updateName(name: String) async throws {
+        guard let userID = userID else { return }
+        
+        // Обновление имени пользователя в Firestore
+        try await db.collection("profiles").document(userID).setData(["name": name], merge: true)
+        
+        // Обновление имени в локальной переменной
+        self.name = name
+    }
+    /*
     @MainActor func signUp() async {
             busy = true
             do {
@@ -88,7 +108,7 @@ class AuthVM: ObservableObject {
                 }
             }
             busy = false
-        }
+        }*/
          /*
          private func saveUserToFirestore(user: UserModel) async throws {
              try await db.collection("users").document(user.id ?? UUID().uuidString).setData(user.toDictionary())

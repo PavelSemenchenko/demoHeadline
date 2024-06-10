@@ -31,7 +31,7 @@ struct HomeScreen: View {
                 
                 Spacer()
                 
-                Text("Hello, \(name)")
+                Text("Hello, \(authVM.name)")
                     .fontWeight(.bold)
                     .padding()
                 NavigationLink(destination: ProfileSetupScreen()) {

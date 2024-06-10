@@ -24,6 +24,25 @@ struct ProfileSetupScreen: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.words)
                 .padding()
+            
+            Button("Save Profile") {
+                guard !name.isEmpty, !lastName.isEmpty else { return }
+                Task {
+                    do {
+                        var service = UserRepository()
+                        service.navigationVM = navigationVM
+                        try await service.addLastName(name: name, lastName: lastName)
+                        
+                        // Вызов метода для обновления имени пользователя
+                        try await authVM.updateName(name: name)
+                        
+                        navigationVM.pushHome()
+                    } catch {
+                        // Обработка ошибок
+                    }
+                }
+            }.padding()
+            /*
             Button("Save Profile") {
                 guard !name.isEmpty, !lastName.isEmpty else { return }
                 Task {
@@ -37,7 +56,8 @@ struct ProfileSetupScreen: View {
                     }
                 }
                 navigationVM.pushHome()
-            }.padding()
+            }.padding()*/
+            
             Button("go home") {
                 navigationVM.pushScreen(route: .home)
             }.padding()
