@@ -12,7 +12,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class AuthVM: ObservableObject {
-    @Published var email: String = "test@test.com"
+    @Published var email: String = "test@test.com1"
     @Published var password: String = "123456"
     @Published var isAuthenticated: Bool = false
     @Published var errorMessage: String?
@@ -69,27 +69,27 @@ class AuthVM: ObservableObject {
         busy = false
     }
     /*
-    func signUp() async {
-            do {
-                let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
-                let newUser = UserEntity(id: authResult.user.uid, email: email, name: name, createdAt: Date())
-                try await saveUserToFirestore(user: newUser)
-                DispatchQueue.main.async {
-                    self.isAuthenticated = true
-                    self.userID = newUser.id
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isAuthenticated = false
-                }
-            }
-        }*/
-        
-        private func saveUserToFirestore(user: UserEntity) async throws {
-            try await db.collection("users").document(user.id ?? UUID().uuidString).setData(user.toDictionary())
-        }
-    //
+     func signUp() async {
+             do {
+                 let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
+                 let newUser = UserModel(id: authResult.user.uid, email: email, displayName: displayName, createdAt: Date())
+                 try await saveUserToFirestore(user: newUser)
+                 DispatchQueue.main.async {
+                     self.isAuthenticated = true
+                     self.userID = newUser.id
+                 }
+             } catch {
+                 DispatchQueue.main.async {
+                     self.errorMessage = error.localizedDescription
+                     self.isAuthenticated = false
+                 }
+             }
+         }
+         
+         private func saveUserToFirestore(user: UserModel) async throws {
+             try await db.collection("users").document(user.id ?? UUID().uuidString).setData(user.toDictionary())
+         }
+    */
     func signIn() async {
         do {
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)

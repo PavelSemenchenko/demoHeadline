@@ -10,6 +10,7 @@ import SwiftUI
 struct SignUpScreen: View {
     @EnvironmentObject private var authVM : AuthVM
     @EnvironmentObject private var navigationVM : NavigationRouter
+    @EnvironmentObject private var userRepository : UserRepository
     
     @State var name: String = ""
     @State var password: String = ""
@@ -35,7 +36,7 @@ struct SignUpScreen: View {
                     .fontWeight(.bold)
                     .padding()
                 
-                TextField("Username or email address", text: $authVM.name)
+                TextField("Username or email address", text: $authVM.email)
                     .padding()
                     .frame(height: 44)
                     .background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
@@ -137,12 +138,12 @@ struct SignUpScreen: View {
                 Spacer().frame(maxHeight: 20)
                 HStack {
                     Spacer()
-                    SignButton(text: "Sign Up", enabled: authVM.canSignUp, busy: authVM.busy) {
+                    SignButton(text: "Sign Up", enabled: true, busy: false) {
                         Task {
                             await authVM.signUp()
-                            if authVM.isAuthenticated {
+                            //if authVM.isAuthenticated {
                                 navigationVM.pushScreen(route: .home)
-                            }
+                            //}
                         }
                     }/*
                       NavigationLink(destination: SignUpScreen()) {
