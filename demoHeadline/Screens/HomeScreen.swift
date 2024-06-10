@@ -34,6 +34,11 @@ struct HomeScreen: View {
                 Text("Hello, \(name)")
                     .fontWeight(.bold)
                     .padding()
+                NavigationLink(destination: ProfileSetupScreen()) {
+                    Text("Edit profile")
+                        .foregroundColor(.blue)
+                        .padding()
+                }
                 NavigationLink(destination: SignInScreen()) {
                     Text("Sign In")
                         .foregroundColor(.blue)

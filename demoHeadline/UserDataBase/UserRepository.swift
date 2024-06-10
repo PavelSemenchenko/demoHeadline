@@ -31,7 +31,7 @@ class UserRepository: ObservableObject {
                         print("Username added to Firestore successfully.")
                     }
                 }
-               //navigationVM.pushHome()
+               navigationVM.pushHome()
             } catch {
                 print("Error adding username to Firestore: \(error.localizedDescription)")
             }
@@ -73,6 +73,28 @@ class UserRepository: ObservableObject {
             }
         } catch {
             print("Error fetching user data: \(error.localizedDescription)")
+        }
+    }
+    
+    @MainActor func addLastName(name:String, lastName: String) async {
+        
+        if let currentUID = Auth.auth().currentUser?.uid {
+            let db = Firestore.firestore()
+            let userRef = db.collection("profiles").document(currentUID)
+            do {
+                try await userRef.setData(["name": name, "lastName": lastName]) { error in
+                    if let error = error {
+                        print("Error adding username to Firestore: \(error.localizedDescription)")
+                    } else {
+                        print("Username added to Firestore successfully.")
+                    }
+                }
+               navigationVM.pushHome()
+            } catch {
+                print("Error adding username to Firestore: \(error.localizedDescription)")
+            }
+        } else {
+            print("Current user ID is nil.")
         }
     }
 }
