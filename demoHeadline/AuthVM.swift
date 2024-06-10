@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseAuth
 import FirebaseAuthCombineSwift
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class AuthVM: ObservableObject {
     @Published var email: String = "test@test.com"
@@ -17,6 +19,8 @@ class AuthVM: ObservableObject {
     @Published var userID: String?
     @Published var busy: Bool = false    //@ObservableObject var authViewModel = AuthVM()
     //@StateObject var navigationVM = NavigationRouter()
+    @Published var name: String = ""
+    private var db = Firestore.firestore()
     
     init() {
         loadAuthState()
@@ -41,6 +45,9 @@ class AuthVM: ObservableObject {
     var canLogin: Bool {
         return isEmailCorrect && isPaswordCorrect
     }
+    var canSignUp: Bool {
+            isEmailCorrect && isPaswordCorrect && !name.isEmpty
+        }
     func forgotPassword(email: String) {
         Auth.auth().sendPasswordReset(withEmail: email)
     }
@@ -49,7 +56,40 @@ class AuthVM: ObservableObject {
         print(Auth.auth().currentUser?.uid)
         return Auth.auth().currentUser != nil
     }
-    
+    //
+    @MainActor func signUp() async {
+        busy = true
+        do {
+            let result = try? await Auth.auth().createUser(withEmail: email, password: password)
+           print("++++++++++ user have been created +++++++")
+            print("\(Auth.auth().currentUser?.uid)")
+        } catch {
+            
+        }
+        busy = false
+    }
+    /*
+    func signUp() async {
+            do {
+                let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
+                let newUser = UserEntity(id: authResult.user.uid, email: email, name: name, createdAt: Date())
+                try await saveUserToFirestore(user: newUser)
+                DispatchQueue.main.async {
+                    self.isAuthenticated = true
+                    self.userID = newUser.id
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                    self.isAuthenticated = false
+                }
+            }
+        }*/
+        
+        private func saveUserToFirestore(user: UserEntity) async throws {
+            try await db.collection("users").document(user.id ?? UUID().uuidString).setData(user.toDictionary())
+        }
+    //
     func signIn() async {
         do {
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
@@ -74,24 +114,7 @@ class AuthVM: ObservableObject {
             return nil
         }
     }
-    
-    /*
-     @MainActor func signIn(navigationVM: NavigationRouter) async {
-     busy = true
-     do {
-     //let result =
-     try await Auth.auth().signIn(withEmail: email, password: password)
-     navigationVM.pushScreen(route: .home)
-     } catch {
-     errorMessage = "Ошибка входа: \(error.localizedDescription)"
-     //showError = true
-     //print("00000\(showError)")
-     print("\(#file) \(#function) \(error)")
-     }
-     busy = false
-     }
-     */
-    
+        
     func signOut(navigationVM: NavigationRouter) {
             do {
                 try Auth.auth().signOut()

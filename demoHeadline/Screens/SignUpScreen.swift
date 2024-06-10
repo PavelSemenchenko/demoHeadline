@@ -35,7 +35,7 @@ struct SignUpScreen: View {
                     .fontWeight(.bold)
                     .padding()
                 
-                TextField("Username or email address", text: $authVM.displayName)
+                TextField("Username or email address", text: $authVM.name)
                     .padding()
                     .frame(height: 44)
                     .background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
@@ -236,5 +236,8 @@ struct SignUpScreen: View {
 
 
 #Preview {
-    SignUpScreen()
+        SignUpScreen()
+        .environmentObject(AuthVM())
+        .environmentObject(NavigationRouter())
+        //.environmentObject(UserRepository())
 }

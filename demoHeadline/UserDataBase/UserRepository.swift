@@ -14,7 +14,7 @@ import FirebaseFirestoreCombineSwift
 class UserRepository: ObservableObject {
     var navigationVM: NavigationRouter!
     @Published var name = "..."
-    @Published var nickName = "user"
+    //@Published var nickName = "user"
     
     @MainActor func addUserName(name:String) async {
         
@@ -23,7 +23,7 @@ class UserRepository: ObservableObject {
             let userRef = db.collection("profiles").document(currentUID)
             do {
                 try await userRef.setData(["name" : name,
-                                           "nickName":nickName ,
+                                           //"nickName":nickName ,
                                            "userId": currentUID]) { error in
                     if let error = error {
                         print("Error adding username to Firestore: \(error.localizedDescription)")
@@ -63,7 +63,7 @@ class UserRepository: ObservableObject {
                 if let contact = try? document.data(as: UserEntity.self) {
                     // Обновляем значение @Published var name
                     self.name = contact.name //?? "John Doe"
-                    self.nickName = contact.nickName
+                    //self.displayName = contact.displayName
                     self.objectWillChange.send()
                 } else {
                     print("Failed to decode Contact from document data")

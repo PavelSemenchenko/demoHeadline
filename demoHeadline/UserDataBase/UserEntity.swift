@@ -13,13 +13,13 @@ import FirebaseFirestoreSwift
 struct UserEntity: Codable, Hashable ,Identifiable {
     @DocumentID var id: String?
     var email: String
-    var displayName: String
+    var name: String
     var createdAt: Date
     
     func toDictionary() -> [String: Any] {
         return [
             "email": email,
-            "displayName": displayName,
+            "name": name,
             "createdAt": createdAt
         ]
     }

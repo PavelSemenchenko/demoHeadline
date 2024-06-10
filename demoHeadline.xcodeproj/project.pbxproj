@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A6922932C163C6200968B3B /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6922922C163C6200968B3B /* UserEntity.swift */; };
+		2A6922952C163DEF00968B3B /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6922942C163DEF00968B3B /* UserRepository.swift */; };
 		2A6A03FE2C0F961A001BC675 /* SignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A03FD2C0F961A001BC675 /* SignButton.swift */; };
 		2A6A04002C0F9B68001BC675 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A03FF2C0F9B68001BC675 /* GoogleService-Info.plist */; };
 		2A6A04022C0F9BBB001BC675 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6A04012C0F9BBB001BC675 /* FirebaseAnalytics */; };
@@ -86,6 +88,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A6922922C163C6200968B3B /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
+		2A6922942C163DEF00968B3B /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		2A6A03FD2C0F961A001BC675 /* SignButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignButton.swift; sourceTree = "<group>"; };
 		2A6A03FF2C0F9B68001BC675 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2A6A043A2C0FA417001BC675 /* EmailTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTextField.swift; sourceTree = "<group>"; };
@@ -176,6 +180,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A6922962C163E7900968B3B /* UserDataBase */ = {
+			isa = PBXGroup;
+			children = (
+				2A6922922C163C6200968B3B /* UserEntity.swift */,
+				2A6922942C163DEF00968B3B /* UserRepository.swift */,
+			);
+			path = UserDataBase;
+			sourceTree = "<group>";
+		};
+		2A6922972C163E9400968B3B /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				2AFD1D612C0D074C00C5EAC8 /* SplashScreen.swift */,
+				2AFD1D632C0D076800C5EAC8 /* SignInScreen.swift */,
+				2AFD1D5F2C0D072E00C5EAC8 /* ForgotPasswordScreen.swift */,
+				2AFD1D5D2C0D070C00C5EAC8 /* PrivacyScreen.swift */,
+				2AFD1D652C0D078600C5EAC8 /* SignUpScreen.swift */,
+				2AFD1D5B2C0D06EB00C5EAC8 /* HomeScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		2A6A04392C0FA3F9001BC675 /* Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,14 +232,10 @@
 			isa = PBXGroup;
 			children = (
 				2AFD1D122C0D056F00C5EAC8 /* demoHeadlineApp.swift */,
-				2AFD1D612C0D074C00C5EAC8 /* SplashScreen.swift */,
-				2AFD1D5B2C0D06EB00C5EAC8 /* HomeScreen.swift */,
-				2AFD1D632C0D076800C5EAC8 /* SignInScreen.swift */,
-				2AFD1D652C0D078600C5EAC8 /* SignUpScreen.swift */,
-				2AFD1D5F2C0D072E00C5EAC8 /* ForgotPasswordScreen.swift */,
 				2AB25AC32C0E550600DAEDC7 /* NavigationRouter.swift */,
 				2AFD1D672C0D0A4700C5EAC8 /* AuthVM.swift */,
-				2AFD1D5D2C0D070C00C5EAC8 /* PrivacyScreen.swift */,
+				2A6922972C163E9400968B3B /* Screens */,
+				2A6922962C163E7900968B3B /* UserDataBase */,
 				2A6A04392C0FA3F9001BC675 /* Elements */,
 				2AFD1D162C0D057100C5EAC8 /* Assets.xcassets */,
 				2A6A03FF2C0F9B68001BC675 /* GoogleService-Info.plist */,
@@ -372,10 +394,12 @@
 				2A6A043D2C0FA439001BC675 /* PasswordTextField.swift in Sources */,
 				2A6A043B2C0FA417001BC675 /* EmailTextField.swift in Sources */,
 				2AFD1D5E2C0D070C00C5EAC8 /* PrivacyScreen.swift in Sources */,
+				2A6922932C163C6200968B3B /* UserEntity.swift in Sources */,
 				2AFD1D602C0D072E00C5EAC8 /* ForgotPasswordScreen.swift in Sources */,
 				2AFD1D662C0D078600C5EAC8 /* SignUpScreen.swift in Sources */,
 				2AFD1D682C0D0A4700C5EAC8 /* AuthVM.swift in Sources */,
 				2AFD1D642C0D076800C5EAC8 /* SignInScreen.swift in Sources */,
+				2A6922952C163DEF00968B3B /* UserRepository.swift in Sources */,
 				2AFD1D132C0D056F00C5EAC8 /* demoHeadlineApp.swift in Sources */,
 				2AFD1D5C2C0D06EB00C5EAC8 /* HomeScreen.swift in Sources */,
 				2AB25AC42C0E550600DAEDC7 /* NavigationRouter.swift in Sources */,
