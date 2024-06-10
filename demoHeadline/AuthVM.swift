@@ -34,7 +34,27 @@ class AuthVM: ObservableObject {
     private func loadAuthState() {
         isAuthenticated = UserDefaults.standard.bool(forKey: "isAuthenticated")
         userID = UserDefaults.standard.string(forKey: "userID")
+        
+        // Загрузка имени пользователя из Firestore при наличии userID
+        if let userID = userID {
+            loadUserNameFromFirestore(userID: userID)
+        }
     }
+    private func loadUserNameFromFirestore(userID: String) {
+        db.collection("profiles").document(userID).getDocument { snapshot, error in
+            if let error = error {
+                print("Error getting user document: \(error)")
+                return
+            }
+            
+            if let data = snapshot?.data(), let userName = data["name"] as? String {
+                DispatchQueue.main.async {
+                    self.name = userName
+                }
+            }
+        }
+    }
+    
     var isEmailCorrect: Bool {
         email.contains("@")
     }
@@ -67,11 +87,13 @@ class AuthVM: ObservableObject {
             
             // Установка значения name после успешной регистрации
             DispatchQueue.main.async {
-                self.isAuthenticated = true
-                self.userID = newUser.id
-                self.name = newUser.name // Установка имени пользователя
-                self.currentUser = newUser
-                self.saveAuthState()
+                    self.isAuthenticated = true
+                    self.userID = newUser.id
+                    self.currentUser = newUser
+                    self.saveAuthState()
+                    
+                    // Загрузка имени пользователя из Firestore после успешной регистрации
+                self.loadUserNameFromFirestore(userID: newUser.id!)
             }
         } catch {
             DispatchQueue.main.async {
@@ -79,6 +101,15 @@ class AuthVM: ObservableObject {
             }
         }
         busy = false
+    }
+    func getCurrentUserID() -> String? {
+        if let userID = Auth.auth().currentUser?.uid {
+            print("User ID: \(userID)")
+            return userID
+        } else {
+            print("No user is currently signed in.")
+            return nil
+        }
     }
     @MainActor func updateName(name: String) async throws {
         guard let userID = userID else { return }
@@ -129,15 +160,7 @@ class AuthVM: ObservableObject {
             }
         }
     }
-    func getCurrentUserID() -> String? {
-        if let userID = Auth.auth().currentUser?.uid {
-            print("User ID: \(userID)")
-            return userID
-        } else {
-            print("No user is currently signed in.")
-            return nil
-        }
-    }
+    
         
     func signOut(navigationVM: NavigationRouter) {
             do {
