@@ -12,7 +12,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class AuthVM: ObservableObject {
-    @Published var email: String = "test@test.com1"
+    @Published var email: String = "1test@test.com"
     @Published var password: String = "123456"
     @Published var isAuthenticated: Bool = false
     @Published var errorMessage: String?
@@ -20,6 +20,7 @@ class AuthVM: ObservableObject {
     @Published var busy: Bool = false    //@ObservableObject var authViewModel = AuthVM()
     //@StateObject var navigationVM = NavigationRouter()
     @Published var name: String = ""
+    @Published var currentUser: UserEntity?
     private var db = Firestore.firestore()
     
     init() {
@@ -56,7 +57,7 @@ class AuthVM: ObservableObject {
         print(Auth.auth().currentUser?.uid)
         return Auth.auth().currentUser != nil
     }
-    //
+    /*
     @MainActor func signUp() async {
         busy = true
         do {
@@ -67,25 +68,28 @@ class AuthVM: ObservableObject {
             
         }
         busy = false
-    }
-    /*
-     func signUp() async {
-             do {
-                 let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
-                 let newUser = UserModel(id: authResult.user.uid, email: email, displayName: displayName, createdAt: Date())
-                 try await saveUserToFirestore(user: newUser)
-                 DispatchQueue.main.async {
-                     self.isAuthenticated = true
-                     self.userID = newUser.id
-                 }
-             } catch {
-                 DispatchQueue.main.async {
-                     self.errorMessage = error.localizedDescription
-                     self.isAuthenticated = false
-                 }
-             }
-         }
-         
+    }*/
+    
+    @MainActor func signUp() async {
+            busy = true
+            do {
+                let result = try await Auth.auth().createUser(withEmail: email, password: password)
+                let newUser = UserEntity(id: result.user.uid, email: email, name: name, createdAt: Date())
+                try await db.collection("profiles").document(newUser.id!).setData(newUser.toDictionary())
+                DispatchQueue.main.async {
+                    self.isAuthenticated = true
+                    self.userID = newUser.id
+                    self.currentUser = newUser
+                    self.saveAuthState()
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+            busy = false
+        }
+         /*
          private func saveUserToFirestore(user: UserModel) async throws {
              try await db.collection("users").document(user.id ?? UUID().uuidString).setData(user.toDictionary())
          }
