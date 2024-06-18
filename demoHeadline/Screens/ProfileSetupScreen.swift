@@ -66,6 +66,17 @@ struct ProfileSetupScreen: View {
                 navigationVM.pushScreen(route: .signIn)
             }
         }
+        .onAppear {
+                    Task {
+                        do {
+                            try await authVM.loadUserData()
+                            name = authVM.name
+                            lastName = authVM.currentUser?.lastName ?? ""
+                        } catch {
+                            // Обработка ошибок
+                        }
+                    }
+                }
     }
 }
 

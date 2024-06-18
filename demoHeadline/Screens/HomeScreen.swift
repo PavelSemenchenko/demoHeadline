@@ -23,22 +23,25 @@ struct HomeScreen: View {
                                 Text("No user ID available")
                                     .padding()
                             }
-                    
+                HStack {
+                    Text("Hello, \(authVM.name)")
+                        .fontWeight(.bold)
+                        .padding()
+                    Spacer()
                     Button("Sign Out") {
                         authVM.signOut(navigationVM: navigationVM)
                         
-                    }
+                    }.padding()
+                }
+                CustomDivider(color: .black, height: 2, padding: 32)
                 
-                Spacer()
                 
-                Text("Hello, \(authVM.name)")
-                    .fontWeight(.bold)
-                    .padding()
                 NavigationLink(destination: ProfileSetupScreen()) {
                     Text("Edit profile")
                         .foregroundColor(.blue)
                         .padding()
                 }
+                /*
                 NavigationLink(destination: SignInScreen()) {
                     Text("Sign In")
                         .foregroundColor(.blue)
@@ -48,10 +51,23 @@ struct HomeScreen: View {
                     Text("Sign Up")
                         .foregroundColor(.blue)
                         .padding()
-                }
+                }*/
                 Spacer()
             }
         }
+    }
+}
+struct CustomDivider: View {
+    var color: Color = .black
+    var height: CGFloat = 1
+    var padding: CGFloat = 16
+    
+    var body: some View {
+        Divider()
+            .background(color)
+            .frame(height: height)
+            //.padding(.horizontal, padding)
+            //.edgesIgnoringSafeArea(.horizontal)
     }
 }
 

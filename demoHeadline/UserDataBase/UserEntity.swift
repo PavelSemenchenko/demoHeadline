@@ -14,12 +14,14 @@ struct UserEntity: Codable, Hashable ,Identifiable {
     @DocumentID var id: String?
     var email: String
     var name: String
+    var lastName: String
     var createdAt: Date
     
     func toDictionary() -> [String: Any] {
         return [
             "email": email,
             "name": name,
+            "lastName": lastName,
             "createdAt": createdAt
         ]
     }

@@ -20,6 +20,7 @@ class AuthVM: ObservableObject {
     @Published var busy: Bool = false    //@ObservableObject var authViewModel = AuthVM()
     //@StateObject var navigationVM = NavigationRouter()
     @Published var name: String = ""
+    @Published var lastName: String = ""
     @Published var currentUser: UserEntity?
     private var db = Firestore.firestore()
     
@@ -40,6 +41,16 @@ class AuthVM: ObservableObject {
             loadUserNameFromFirestore(userID: userID)
         }
     }
+    func loadUserData() async throws {
+            guard let userID = self.userID else { return }
+            let document = try await db.collection("profiles").document(userID).getDocument()
+            if let data = document.data(), let user = try? UserEntity(dictionary: data) {
+                DispatchQueue.main.async {
+                    self.currentUser = user
+                    self.name = user.name ?? ""
+                }
+            }
+        }
     private func loadUserNameFromFirestore(userID: String) {
         db.collection("profiles").document(userID).getDocument { snapshot, error in
             if let error = error {
@@ -82,7 +93,7 @@ class AuthVM: ObservableObject {
         busy = true
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            let newUser = UserEntity(id: result.user.uid, email: email, name: name, createdAt: Date())
+            let newUser = UserEntity(id: result.user.uid, email: email, name: name, lastName: lastName, createdAt: Date())
             try await db.collection("profiles").document(newUser.id!).setData(newUser.toDictionary())
             
             // Установка значения name после успешной регистрации
