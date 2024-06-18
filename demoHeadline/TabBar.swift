@@ -19,10 +19,16 @@ struct TabBar: View {
     var body: some View {
         TabView(selection: $currentTab){
             HomeScreen()
-                .tabItem { Text("Home") }
+                .tabItem {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
                 .tag(0)
             ProfileSetupScreen()
-                .tabItem { Text("Profile") }
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Profile")
+                }
                 .tag(1)
         }.navigationBarBackButtonHidden(true)
     }

@@ -65,7 +65,7 @@ struct ProfileSetupScreen: View {
                 authVM.signOut(navigationVM: navigationVM)
                 navigationVM.pushScreen(route: .signIn)
             }
-        }
+        }/*
         .onAppear {
                     Task {
                         do {
@@ -76,7 +76,7 @@ struct ProfileSetupScreen: View {
                             // Обработка ошибок
                         }
                     }
-                }
+                }*/
     }
 }
 

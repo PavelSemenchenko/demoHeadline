@@ -49,6 +49,7 @@
 		2AB25ACC2C0E5C1300DAEDC7 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB25ACB2C0E5C1300DAEDC7 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		2AB25ACE2C0E5C1300DAEDC7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB25ACD2C0E5C1300DAEDC7 /* FirebaseAuth */; };
 		2AB25AD02C0E5C1300DAEDC7 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 2AB25ACF2C0E5C1300DAEDC7 /* FirebaseAuthCombine-Community */; };
+		2AB642262C21F48100A48F1F /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB642252C21F48100A48F1F /* TabBar.swift */; };
 		2AFD1D132C0D056F00C5EAC8 /* demoHeadlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFD1D122C0D056F00C5EAC8 /* demoHeadlineApp.swift */; };
 		2AFD1D172C0D057100C5EAC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AFD1D162C0D057100C5EAC8 /* Assets.xcassets */; };
 		2AFD1D1A2C0D057100C5EAC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AFD1D192C0D057100C5EAC8 /* Preview Assets.xcassets */; };
@@ -97,6 +98,7 @@
 		2A6A043A2C0FA417001BC675 /* EmailTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTextField.swift; sourceTree = "<group>"; };
 		2A6A043C2C0FA439001BC675 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		2AB25AC32C0E550600DAEDC7 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		2AB642252C21F48100A48F1F /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		2AFD1D0F2C0D056F00C5EAC8 /* demoHeadline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demoHeadline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AFD1D122C0D056F00C5EAC8 /* demoHeadlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demoHeadlineApp.swift; sourceTree = "<group>"; };
 		2AFD1D162C0D057100C5EAC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				2AFD1D122C0D056F00C5EAC8 /* demoHeadlineApp.swift */,
 				2AB25AC32C0E550600DAEDC7 /* NavigationRouter.swift */,
 				2AFD1D672C0D0A4700C5EAC8 /* AuthVM.swift */,
+				2AB642252C21F48100A48F1F /* TabBar.swift */,
 				2A6922972C163E9400968B3B /* Screens */,
 				2A6922962C163E7900968B3B /* UserDataBase */,
 				2A6A04392C0FA3F9001BC675 /* Elements */,
@@ -395,6 +398,7 @@
 				2A6A03FE2C0F961A001BC675 /* SignButton.swift in Sources */,
 				2AFD1D622C0D074C00C5EAC8 /* SplashScreen.swift in Sources */,
 				2A6A043D2C0FA439001BC675 /* PasswordTextField.swift in Sources */,
+				2AB642262C21F48100A48F1F /* TabBar.swift in Sources */,
 				2A6A043B2C0FA417001BC675 /* EmailTextField.swift in Sources */,
 				2AFD1D5E2C0D070C00C5EAC8 /* PrivacyScreen.swift in Sources */,
 				2A6922932C163C6200968B3B /* UserEntity.swift in Sources */,

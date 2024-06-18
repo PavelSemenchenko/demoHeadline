@@ -41,6 +41,7 @@ class AuthVM: ObservableObject {
             loadUserNameFromFirestore(userID: userID)
         }
     }
+    /*
     func loadUserData() async throws {
             guard let userID = self.userID else { return }
             let document = try await db.collection("profiles").document(userID).getDocument()
@@ -50,7 +51,7 @@ class AuthVM: ObservableObject {
                     self.name = user.name ?? ""
                 }
             }
-        }
+        }*/
     private func loadUserNameFromFirestore(userID: String) {
         db.collection("profiles").document(userID).getDocument { snapshot, error in
             if let error = error {

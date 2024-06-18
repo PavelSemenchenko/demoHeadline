@@ -28,7 +28,7 @@ struct demoHeadlineApp: App {
         WindowGroup {
             //NavigationStack(path: $navigationVM.currentRoute) {
                 if authVM.isAuthenticated {
-                    HomeScreen()
+                    TabBar(currentTab: .home)
                         .environmentObject(navigationVM)
                         .environmentObject(authVM)
                 } else {
@@ -50,9 +50,15 @@ struct demoHeadlineApp: App {
                                 SignInScreen()
                                     .environmentObject(navigationVM)
                                     .environmentObject(authVM)
+                            case .tabBar:
+                                TabBar()
+                                    .environmentObject(navigationVM)
+                                    .environmentObject(authVM)
+                                    .environmentObject(UserRepository())
                             }
                         }
-                }.environmentObject(navigationVM)
+                }.navigationBarBackButtonHidden(true)
+                    .environmentObject(navigationVM)
                         .environmentObject(authVM)
             }//.environmentObject(navigationVM)
                 //.environmentObject(authVM)
