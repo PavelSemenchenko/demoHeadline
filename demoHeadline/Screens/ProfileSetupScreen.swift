@@ -21,7 +21,7 @@ struct ProfileSetupScreen: View {
                     HStack {
                         Text("Name")
                             .frame(width: 80, alignment: .leading)
-                        TextField("Enter your first name", text: $name)
+                        TextField("Enter your first name", text: $authVM.name)
                             .textContentType(.givenName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocapitalization(.words)
@@ -30,7 +30,7 @@ struct ProfileSetupScreen: View {
                     HStack {
                         Text("Last name")
                             .frame(width: 80, alignment: .leading)
-                        TextField("Enter your last name", text: $lastName)
+                        TextField("Enter your last name", text: $authVM.lastName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocapitalization(.words)
                             .padding(.trailing)
@@ -64,18 +64,20 @@ struct ProfileSetupScreen: View {
                 authVM.signOut(navigationVM: navigationVM)
                 navigationVM.pushScreen(route: .signIn)
             }
-        }.onAppear {
+        }/*
+        .onAppear {
             Task {
                 do {
-                    try await authVM.getCurrentUserID()
-                    name = authVM.name 
+                    try await authVM.loadUserData()
+                    name = authVM.name
                     lastName = authVM.lastName
                     print("+++++++++++++++\(authVM.lastName)")
                 } catch {
                     // Обработка ошибок
+                    print("Error loading user data: \(error.localizedDescription)")
                 }
             }
-        }
+        }*/
     }
 }
 

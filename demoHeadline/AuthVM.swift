@@ -41,17 +41,19 @@ class AuthVM: ObservableObject {
             loadUserNameFromFirestore(userID: userID)
         }
     }
-    /*
     func loadUserData() async throws {
-            guard let userID = self.userID else { return }
-            let document = try await db.collection("profiles").document(userID).getDocument()
-            if let data = document.data(), let user = try? UserEntity(dictionary: data) {
-                DispatchQueue.main.async {
-                    self.currentUser = user
-                    self.name = user.name ?? ""
-                }
+            guard let userID = userID else { return }
+            let document = db.collection("profiles").document(userID)
+            let snapshot = try await document.getDocument()
+            if let data = snapshot.data() {
+                currentUser = try? snapshot.data(as: UserEntity.self)
+                name = currentUser?.name ?? ""
+                lastName = currentUser?.lastName ?? ""
+                print("User data loaded: \(String(describing: currentUser))")
+            } else {
+                print("No data found for user ID: \(userID)")
             }
-        }*/
+        }
     private func loadUserNameFromFirestore(userID: String) {
         db.collection("profiles").document(userID).getDocument { snapshot, error in
             if let error = error {
