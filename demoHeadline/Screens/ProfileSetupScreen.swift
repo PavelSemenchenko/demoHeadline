@@ -16,47 +16,46 @@ struct ProfileSetupScreen: View {
     
     var body: some View {
         VStack{
-            TextField("Enter your first name", text: $name)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.words)
-                .padding()
-            TextField("Enter your last name", text: $lastName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.words)
-                .padding()
-            
-            Button("Save Profile") {
-                guard !name.isEmpty, !lastName.isEmpty else { return }
-                Task {
-                    do {
-                        var service = UserRepository()
-                        service.navigationVM = navigationVM
-                        try await service.setUserInfo(name: name, lastName: lastName)
-                        
-                        // Вызов метода для обновления имени пользователя
-                        try await authVM.updateName(name: name)
-                        
-                        navigationVM.pushHome()
-                    } catch {
-                        // Обработка ошибок
+            Form {
+                Section {
+                    HStack {
+                        Text("Name")
+                            .frame(width: 80, alignment: .leading)
+                        TextField("Enter your first name", text: $name)
+                            .textContentType(.givenName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .autocapitalization(.words)
+                            .padding(.trailing)
+                    }
+                    HStack {
+                        Text("Last name")
+                            .frame(width: 80, alignment: .leading)
+                        TextField("Enter your last name", text: $lastName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .autocapitalization(.words)
+                            .padding(.trailing)
+                    }
+                    HStack {
+                        Spacer()
+                        Button("Save Profile") {
+                            guard !name.isEmpty, !lastName.isEmpty else { return }
+                            Task {
+                                do {
+                                    var service = UserRepository()
+                                    service.navigationVM = navigationVM
+                                    try await service.setUserInfo(name: name, lastName: lastName)
+                                    // Вызов метода для обновления имени пользователя
+                                    //try await authVM.updateName(name: name)
+                                    navigationVM.pushHome()
+                                } catch {
+                                    // Обработка ошибок
+                                }
+                            }
+                        }.padding()
+                        Spacer()
                     }
                 }
-            }.padding()
-            /*
-            Button("Save Profile") {
-                guard !name.isEmpty, !lastName.isEmpty else { return }
-                Task {
-                    do {
-                        var service = UserRepository()
-                        service.navigationVM = navigationVM
-                        try await service.addLastName(name: name, lastName: lastName)
-                        navigationVM.pushHome()
-                    } catch {
-                        
-                    }
-                }
-                navigationVM.pushHome()
-            }.padding()*/
+            }.navigationBarTitle("Profile")
             
             Button("go home") {
                 navigationVM.pushScreen(route: .home)
@@ -65,18 +64,18 @@ struct ProfileSetupScreen: View {
                 authVM.signOut(navigationVM: navigationVM)
                 navigationVM.pushScreen(route: .signIn)
             }
-        }/*
-        .onAppear {
-                    Task {
-                        do {
-                            try await authVM.loadUserData()
-                            name = authVM.name
-                            lastName = authVM.currentUser?.lastName ?? ""
-                        } catch {
-                            // Обработка ошибок
-                        }
-                    }
-                }*/
+        }.onAppear {
+            Task {
+                do {
+                    try await authVM.getCurrentUserID()
+                    name = authVM.name 
+                    lastName = authVM.lastName
+                    print("+++++++++++++++\(authVM.lastName)")
+                } catch {
+                    // Обработка ошибок
+                }
+            }
+        }
     }
 }
 
