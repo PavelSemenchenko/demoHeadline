@@ -23,6 +23,7 @@ struct demoHeadlineApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var navigationVM = NavigationRouter()
     @StateObject var authVM = AuthVM()
+    @StateObject private var userRepository = UserRepository()
     
     var body: some Scene {
         WindowGroup {
@@ -43,6 +44,7 @@ struct demoHeadlineApp: App {
                                 HomeScreen()
                                     .environmentObject(navigationVM)
                                     .environmentObject(authVM)
+                                    .environmentObject(userRepository)
                             case .signUp:
                                 SignUpScreen()
                                     .environmentObject(navigationVM)
@@ -54,12 +56,13 @@ struct demoHeadlineApp: App {
                                 TabBar()
                                     .environmentObject(navigationVM)
                                     .environmentObject(authVM)
-                                    .environmentObject(UserRepository())
+                                    .environmentObject(userRepository)
                             }
                         }
                 }.navigationBarBackButtonHidden(true)
                     .environmentObject(navigationVM)
                         .environmentObject(authVM)
+                        .environmentObject(userRepository)
             }//.environmentObject(navigationVM)
                 //.environmentObject(authVM)
         }

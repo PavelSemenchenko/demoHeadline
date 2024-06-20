@@ -42,7 +42,7 @@ struct ProfileSetupScreen: View {
                             Task {
                                 do {
                                     var service = UserRepository()
-                                    service.navigationVM = navigationVM
+                                    //service.navigationVM = navigationVM
                                     try await service.setUserInfo(name: name, lastName: lastName)
                                     // Вызов метода для обновления имени пользователя
                                     //try await authVM.updateName(name: name)

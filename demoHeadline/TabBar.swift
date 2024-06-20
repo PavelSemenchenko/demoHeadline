@@ -37,4 +37,5 @@ struct TabBar: View {
 #Preview {
     TabBar().environmentObject(NavigationRouter())
         .environmentObject(AuthVM())
+        .environmentObject(UserRepository())
 }

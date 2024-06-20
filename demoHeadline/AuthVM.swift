@@ -43,6 +43,7 @@ class AuthVM: ObservableObject {
     }
     func loadUserData() async throws {
             guard let userID = userID else { return }
+        
             let document = db.collection("profiles").document(userID)
             let snapshot = try await document.getDocument()
             if let data = snapshot.data() {
@@ -60,8 +61,9 @@ class AuthVM: ObservableObject {
                 print("Error getting user document: \(error)")
                 return
             }
-            
-            if let data = snapshot?.data(), let userName = data["name"] as? String {
+            // тут собака зарыта с именем
+            if let data = snapshot?.data(),
+                let userName = data["name"] as? String {
                 DispatchQueue.main.async {
                     self.name = userName
                 }

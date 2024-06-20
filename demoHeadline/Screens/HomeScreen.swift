@@ -11,6 +11,7 @@ struct HomeScreen: View {
     @State var name : String = "User"
     @EnvironmentObject private var authVM : AuthVM
     @EnvironmentObject private var navigationVM : NavigationRouter
+    @EnvironmentObject private var repository: UserRepository
     
     var body: some View {
         NavigationStack {
@@ -25,6 +26,17 @@ struct HomeScreen: View {
                             }
                 HStack {
                     Text("Hello, \(authVM.name)")
+                        .fontWeight(.bold)
+                        .padding()
+                        .onAppear {
+                            if authVM.name == "..." {
+                                Task {
+                                    await repository.getUserInfo()
+                                    print("Current User ID: \(repository.name)")
+                                }
+                            }
+                        }
+                    Text("+\(authVM.lastName)")
                         .fontWeight(.bold)
                         .padding()
                     Spacer()
@@ -53,6 +65,11 @@ struct HomeScreen: View {
                         .padding()
                 }*/
                 Spacer()
+            }.onAppear {
+                print("name is \(authVM.name)")
+                print("last name is \(authVM.lastName)")
+                //print("name is \(repository.name)")
+                //print("last name is \(repository.lastName)")
             }
         }
     }
@@ -75,8 +92,10 @@ struct CustomDivider: View {
     // Создаем временные данные для предварительного просмотра
     let authVM = AuthVM()
     let navigationVM = NavigationRouter()
+    let repo = UserRepository()
     
     return HomeScreen()
         .environmentObject(authVM)
         .environmentObject(navigationVM)
+        .environmentObject(repo)
 }
