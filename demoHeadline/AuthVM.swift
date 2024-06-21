@@ -17,13 +17,13 @@ class AuthVM: ObservableObject {
     @Published var isAuthenticated: Bool = false
     @Published var errorMessage: String?
     @Published var userID: String?
-    @Published var busy: Bool = false    //@ObservableObject var authViewModel = AuthVM()
+    @Published var busy: Bool = false    
     //@StateObject var navigationVM = NavigationRouter()
     @Published var name: String = ""
     @Published var lastName: String = ""
     @Published var currentUser: UserEntity?
     private var db = Firestore.firestore()
-    
+      
     init() {
         loadAuthState()
     }

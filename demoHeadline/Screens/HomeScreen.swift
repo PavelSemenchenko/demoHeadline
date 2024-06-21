@@ -29,12 +29,13 @@ struct HomeScreen: View {
                         .fontWeight(.bold)
                         .padding()
                         .onAppear {
-                            if authVM.name == "..." {
+                            //if authVM.name == "..." {
                                 Task {
-                                    await repository.getUserInfo()
-                                    print("Current User ID: \(repository.name)")
+                                    //await authVM.getUserInfo()
+                                    print("Current User name from repo \(repository.name)")
+                                    print("Current User last from repo \(repository.lastName)")
                                 }
-                            }
+                            //}
                         }
                     Text("+\(authVM.lastName)")
                         .fontWeight(.bold)

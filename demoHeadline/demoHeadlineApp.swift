@@ -32,6 +32,7 @@ struct demoHeadlineApp: App {
                     TabBar(currentTab: .home)
                         .environmentObject(navigationVM)
                         .environmentObject(authVM)
+                        .environmentObject(userRepository)
                 } else {
                     NavigationStack(path: $navigationVM.currentRoute) {
                     SplashScreen()
