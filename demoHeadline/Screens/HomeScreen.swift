@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @State var name : String = "User"
+    //@State var name : String = "User"
     @EnvironmentObject private var authVM : AuthVM
     @EnvironmentObject private var navigationVM : NavigationRouter
     @EnvironmentObject private var repository: UserRepository

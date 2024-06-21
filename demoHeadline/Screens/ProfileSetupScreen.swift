@@ -15,7 +15,7 @@ struct ProfileSetupScreen: View {
     @State private var lastName = ""
     
     var body: some View {
-        VStack{
+        VStack {
             Form {
                 Section {
                     HStack {
@@ -74,20 +74,13 @@ struct ProfileSetupScreen: View {
                 authVM.signOut(navigationVM: navigationVM)
                 navigationVM.pushScreen(route: .signIn)
             }
-        }/*
-          .onAppear {
-          Task {
-          do {
-          try await authVM.loadUserData()
-          name = authVM.name
-          lastName = authVM.lastName
-          print("+++++++++++++++\(authVM.lastName)")
-          } catch {
-          // Обработка ошибок
-          print("Error loading user data: \(error.localizedDescription)")
-          }
-          }
-          }*/
+        }.onAppear {
+            Task {
+                await repository.getUserInfo()
+                self.name = repository.name
+                self.lastName = repository.lastName
+            }
+        }
     }
 }
 
