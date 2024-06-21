@@ -17,6 +17,23 @@ class UserRepository: ObservableObject {
     @Published var lastName = "..."
     
     @MainActor func setUserInfo(name: String, lastName: String) async {
+        guard let currentUID = Auth.auth().currentUser?.uid else {
+                    print("User ID is nil.")
+                    return
+                }
+                let db = Firestore.firestore()
+                let userRef = db.collection("profiles").document(currentUID)
+                do {
+                    try await userRef.setData([
+                        "name": name,
+                        "lastName": lastName,
+                        "userId": currentUID
+                    ])
+                    print("User info successfully set.")
+                } catch {
+                    print("Error setting user info: \(error.localizedDescription)")
+                }
+        /*
         if let currentUID = Auth.auth().currentUser?.uid {
             let db = Firestore.firestore()
             let userRef = db.collection("profiles").document(currentUID)
@@ -37,7 +54,7 @@ class UserRepository: ObservableObject {
             }
         } else {
             print("Current user ID is nil.")
-        }
+        }*/
     }
     
     @MainActor func getUserInfo() async {

@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileSetupScreen: View {
     @EnvironmentObject private var navigationVM: NavigationRouter
     @EnvironmentObject private var repository: UserRepository
-    @EnvironmentObject private var authVM: AuthVM
+    //@EnvironmentObject private var authVM: AuthVM
     @State private var name = ""
     @State private var lastName = ""
     
@@ -21,7 +21,7 @@ struct ProfileSetupScreen: View {
                     HStack {
                         Text("Name")
                             .frame(width: 80, alignment: .leading)
-                        TextField("Enter your first name", text: $authVM.name)
+                        TextField("Enter your first name", text: $repository.name)
                             .textContentType(.givenName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocapitalization(.words)
@@ -30,7 +30,7 @@ struct ProfileSetupScreen: View {
                     HStack {
                         Text("Last name")
                             .frame(width: 80, alignment: .leading)
-                        TextField("Enter your last name", text: $authVM.lastName)
+                        TextField("Enter your last name", text: $repository.lastName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocapitalization(.words)
                             .padding(.trailing)
