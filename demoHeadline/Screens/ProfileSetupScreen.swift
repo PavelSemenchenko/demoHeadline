@@ -13,6 +13,7 @@ struct ProfileSetupScreen: View {
     @EnvironmentObject private var authVM: AuthVM
     @State private var name = ""
     @State private var lastName = ""
+    @State private var showAlert = false // ok update
     
     var body: some View {
         VStack {
@@ -40,9 +41,16 @@ struct ProfileSetupScreen: View {
                         Button("Save User Info") {
                             Task {
                                 await repository.setUserInfo(name: name, lastName: lastName)
+                                showAlert = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                showAlert = false
+                                }
                             }
                         }
                         .padding()
+                        .alert(isPresented: $showAlert) {
+                                        Alert(title: Text("Success"), message: Text("User information saved successfully!"), dismissButton: .default(Text("OK")))
+                                    }
                         /*
                          Button("Save Profile") {
                          guard !name.isEmpty, !lastName.isEmpty else { return }
