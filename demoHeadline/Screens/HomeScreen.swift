@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    //@State var name : String = "User"
     @EnvironmentObject private var authVM : AuthVM
     @EnvironmentObject private var navigationVM : NavigationRouter
     @EnvironmentObject private var repository: UserRepository
@@ -19,33 +18,25 @@ struct HomeScreen: View {
                 
                 if let userID = authVM.userID {
                     Text("User ID: \(userID)")
-                        .padding()
+                        .foregroundStyle(.orange)
                 } else {
                     Text("No user ID available")
-                        .padding()
+                        .foregroundStyle(.red)
                 }
                 HStack {
                     Text("Hello, \(repository.name)")
                         .fontWeight(.bold)
                         .padding()
-                    /*
-                     .onAppear {
-                     //if authVM.name == "..." {
-                     Task {
-                     //await authVM.getUserInfo()
-                     print("Current User name from repo \(repository.name)")
-                     print("Current User last from repo \(repository.lastName)")
-                     }
-                     //}
-                     }*/
                     Text("+\(repository.lastName)")
                         .fontWeight(.bold)
-                        .padding()
                     Spacer()
-                    Button("Sign Out") {
+                    Button(action: {
                         authVM.signOut(navigationVM: navigationVM)
-                        
-                    }.padding()
+                    }) {
+                        Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
+                    .padding()
                 }
                 CustomDivider(color: .black, height: 2, padding: 32)
                 
@@ -55,24 +46,11 @@ struct HomeScreen: View {
                         .foregroundColor(.blue)
                         .padding()
                 }
-                /*
-                 NavigationLink(destination: SignInScreen()) {
-                 Text("Sign In")
-                 .foregroundColor(.blue)
-                 .padding()
-                 }
-                 NavigationLink(destination: SignUpScreen()) {
-                 Text("Sign Up")
-                 .foregroundColor(.blue)
-                 .padding()
-                 }*/
                 Spacer()
             }.onAppear {
                 Task {
                     await repository.getUserInfo()
                 }
-                //print("name is \(repository.name)")
-                //print("last name is \(repository.lastName)")
             }
         }
     }
@@ -86,8 +64,6 @@ struct CustomDivider: View {
         Divider()
             .background(color)
             .frame(height: height)
-        //.padding(.horizontal, padding)
-        //.edgesIgnoringSafeArea(.horizontal)
     }
 }
 

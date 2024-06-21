@@ -40,17 +40,6 @@ struct SignInScreen: View {
                     .onSubmit {
                         focusedField = .password
                     }
-                /*
-                TextField("", text: $authVM.email)
-                    .padding()
-                    .frame(height: 44)
-                    .background(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.white, lineWidth: 1))
-                    .padding(.horizontal)
-                    .focused($focusedField, equals: .name)
-                    .submitLabel(.next)
-                    .onSubmit {
-                        focusedField = .password
-                    }*/
                 
                 if isSecure {
                     SecureField("Password", text: $authVM.password)

@@ -39,10 +39,11 @@ struct ProfileSetupScreen: View {
                     HStack {
                         Spacer()
                         Button("Save User Info") {
+                            guard !name.isEmpty, !lastName.isEmpty else { return }
                             Task {
                                 await repository.setUserInfo(name: name, lastName: lastName)
                                 showAlert = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                 showAlert = false
                                 }
                             }
@@ -51,25 +52,6 @@ struct ProfileSetupScreen: View {
                         .alert(isPresented: $showAlert) {
                                         Alert(title: Text("Success"), message: Text("User information saved successfully!"), dismissButton: .default(Text("OK")))
                                     }
-                        /*
-                         Button("Save Profile") {
-                         guard !name.isEmpty, !lastName.isEmpty else { return }
-                         Task {
-                         do {
-                         var service = UserRepository()
-                         //service.navigationVM = navigationVM
-                         try await service.setUserInfo(name: repository.name,
-                         lastName: repository.lastName)
-                         // Вызов метода для обновления имени пользователя
-                         //try await authVM.updateName(name: name)
-                         navigationVM.pushHome()
-                         print("is saved ???????")
-                         } catch {
-                         // Обработка ошибок
-                         }
-                         }
-                         }.padding()
-                         */
                         Spacer()
                     }
                 }
@@ -93,5 +75,12 @@ struct ProfileSetupScreen: View {
 }
 
 #Preview {
-    ProfileSetupScreen()
+    let authVM = AuthVM()
+    let navigationVM = NavigationRouter()
+    let repository = UserRepository()
+
+    return ProfileSetupScreen()
+        .environmentObject(authVM)
+        .environmentObject(navigationVM)
+        .environmentObject(repository)
 }
