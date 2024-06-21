@@ -43,10 +43,12 @@ struct ProfileSetupScreen: View {
                                 do {
                                     var service = UserRepository()
                                     //service.navigationVM = navigationVM
-                                    try await service.setUserInfo(name: name, lastName: lastName)
+                                    try await service.setUserInfo(name: authVM.name,
+                                                                  lastName: authVM.lastName)
                                     // Вызов метода для обновления имени пользователя
                                     //try await authVM.updateName(name: name)
                                     navigationVM.pushHome()
+                                    print("is saved ???????")
                                 } catch {
                                     // Обработка ошибок
                                 }

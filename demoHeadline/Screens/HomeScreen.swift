@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
- 
+
 struct HomeScreen: View {
     @State var name : String = "User"
     @EnvironmentObject private var authVM : AuthVM
@@ -18,26 +18,27 @@ struct HomeScreen: View {
             VStack {
                 
                 if let userID = authVM.userID {
-                                Text("User ID: \(userID)")
-                                    .padding()
-                            } else {
-                                Text("No user ID available")
-                                    .padding()
-                            }
+                    Text("User ID: \(userID)")
+                        .padding()
+                } else {
+                    Text("No user ID available")
+                        .padding()
+                }
                 HStack {
-                    Text("Hello, \(authVM.name)")
+                    Text("Hello, \(repository.name)")
                         .fontWeight(.bold)
                         .padding()
-                        .onAppear {
-                            //if authVM.name == "..." {
-                                Task {
-                                    //await authVM.getUserInfo()
-                                    print("Current User name from repo \(repository.name)")
-                                    print("Current User last from repo \(repository.lastName)")
-                                }
-                            //}
-                        }
-                    Text("+\(authVM.lastName)")
+                    /*
+                     .onAppear {
+                     //if authVM.name == "..." {
+                     Task {
+                     //await authVM.getUserInfo()
+                     print("Current User name from repo \(repository.name)")
+                     print("Current User last from repo \(repository.lastName)")
+                     }
+                     //}
+                     }*/
+                    Text("+\(repository.lastName)")
                         .fontWeight(.bold)
                         .padding()
                     Spacer()
@@ -55,20 +56,21 @@ struct HomeScreen: View {
                         .padding()
                 }
                 /*
-                NavigationLink(destination: SignInScreen()) {
-                    Text("Sign In")
-                        .foregroundColor(.blue)
-                        .padding()
-                }
-                NavigationLink(destination: SignUpScreen()) {
-                    Text("Sign Up")
-                        .foregroundColor(.blue)
-                        .padding()
-                }*/
+                 NavigationLink(destination: SignInScreen()) {
+                 Text("Sign In")
+                 .foregroundColor(.blue)
+                 .padding()
+                 }
+                 NavigationLink(destination: SignUpScreen()) {
+                 Text("Sign Up")
+                 .foregroundColor(.blue)
+                 .padding()
+                 }*/
                 Spacer()
             }.onAppear {
-                print("name is \(authVM.name)")
-                print("last name is \(authVM.lastName)")
+                Task {
+                    await repository.getUserInfo()
+                }
                 //print("name is \(repository.name)")
                 //print("last name is \(repository.lastName)")
             }
@@ -84,8 +86,8 @@ struct CustomDivider: View {
         Divider()
             .background(color)
             .frame(height: height)
-            //.padding(.horizontal, padding)
-            //.edgesIgnoringSafeArea(.horizontal)
+        //.padding(.horizontal, padding)
+        //.edgesIgnoringSafeArea(.horizontal)
     }
 }
 

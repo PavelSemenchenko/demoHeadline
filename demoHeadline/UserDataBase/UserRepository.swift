@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 import FirebaseFirestoreCombineSwift
 
 class UserRepository: ObservableObject {
-    var navigationVM: NavigationRouter!
+    //var navigationVM: NavigationRouter!
     @Published var name = "..."
     @Published var lastName = "..."
     
@@ -30,6 +30,7 @@ class UserRepository: ObservableObject {
                         print("Username added to Firestore successfully.")
                     }
                 }
+                print("User info successfully set.")
                //navigationVM.pushHome()
             } catch {
                 print("Error adding username to Firestore: \(error.localizedDescription)")
@@ -43,8 +44,21 @@ class UserRepository: ObservableObject {
         guard let userId = Auth.auth().currentUser?.uid else {
             return print ("John Doe")
         }
-        
-        do {
+        let db = Firestore.firestore()
+                let userRef = db.collection("profiles").document(userId)
+                do {
+                    let document = try await userRef.getDocument()
+                    if let data = document.data() {
+                        self.name = data["name"] as? String ?? "Unknown"
+                        self.lastName = data["lastName"] as? String ?? "Unknown"
+                        print("User info successfully fetched.")
+                    } else {
+                        print("User document does not exist.")
+                    }
+                } catch {
+                    print("Error fetching user info: \(error.localizedDescription)")
+                }
+        /*        do {
             // взяли снимок из коллекции с текущим идентификатором пользователя
             let querySnapshot = try await Firestore.firestore()
                 .collection("profiles")
@@ -73,7 +87,7 @@ class UserRepository: ObservableObject {
             }
         } catch {
             print("Error fetching user data: \(error.localizedDescription)")
-        }
+        }*/
     }
     
 }
