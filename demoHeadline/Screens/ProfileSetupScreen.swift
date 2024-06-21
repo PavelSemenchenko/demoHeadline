@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileSetupScreen: View {
     @EnvironmentObject private var navigationVM: NavigationRouter
     @EnvironmentObject private var repository: UserRepository
-    //@EnvironmentObject private var authVM: AuthVM
+    @EnvironmentObject private var authVM: AuthVM
     @State private var name = ""
     @State private var lastName = ""
     
@@ -21,7 +21,7 @@ struct ProfileSetupScreen: View {
                     HStack {
                         Text("Name")
                             .frame(width: 80, alignment: .leading)
-                        TextField("Enter your first name", text: $repository.name)
+                        TextField("Enter your first name", text: $name)
                             .textContentType(.givenName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocapitalization(.words)
@@ -30,30 +30,38 @@ struct ProfileSetupScreen: View {
                     HStack {
                         Text("Last name")
                             .frame(width: 80, alignment: .leading)
-                        TextField("Enter your last name", text: $repository.lastName)
+                        TextField("Enter your last name", text: $lastName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .autocapitalization(.words)
                             .padding(.trailing)
                     }
                     HStack {
                         Spacer()
-                        Button("Save Profile") {
-                            guard !name.isEmpty, !lastName.isEmpty else { return }
+                        Button("Save User Info") {
                             Task {
-                                do {
-                                    var service = UserRepository()
-                                    //service.navigationVM = navigationVM
-                                    try await service.setUserInfo(name: authVM.name,
-                                                                  lastName: authVM.lastName)
-                                    // Вызов метода для обновления имени пользователя
-                                    //try await authVM.updateName(name: name)
-                                    navigationVM.pushHome()
-                                    print("is saved ???????")
-                                } catch {
-                                    // Обработка ошибок
-                                }
+                                await repository.setUserInfo(name: name, lastName: lastName)
                             }
-                        }.padding()
+                        }
+                        .padding()
+                        /*
+                         Button("Save Profile") {
+                         guard !name.isEmpty, !lastName.isEmpty else { return }
+                         Task {
+                         do {
+                         var service = UserRepository()
+                         //service.navigationVM = navigationVM
+                         try await service.setUserInfo(name: repository.name,
+                         lastName: repository.lastName)
+                         // Вызов метода для обновления имени пользователя
+                         //try await authVM.updateName(name: name)
+                         navigationVM.pushHome()
+                         print("is saved ???????")
+                         } catch {
+                         // Обработка ошибок
+                         }
+                         }
+                         }.padding()
+                         */
                         Spacer()
                     }
                 }
@@ -67,19 +75,19 @@ struct ProfileSetupScreen: View {
                 navigationVM.pushScreen(route: .signIn)
             }
         }/*
-        .onAppear {
-            Task {
-                do {
-                    try await authVM.loadUserData()
-                    name = authVM.name
-                    lastName = authVM.lastName
-                    print("+++++++++++++++\(authVM.lastName)")
-                } catch {
-                    // Обработка ошибок
-                    print("Error loading user data: \(error.localizedDescription)")
-                }
-            }
-        }*/
+          .onAppear {
+          Task {
+          do {
+          try await authVM.loadUserData()
+          name = authVM.name
+          lastName = authVM.lastName
+          print("+++++++++++++++\(authVM.lastName)")
+          } catch {
+          // Обработка ошибок
+          print("Error loading user data: \(error.localizedDescription)")
+          }
+          }
+          }*/
     }
 }
 
