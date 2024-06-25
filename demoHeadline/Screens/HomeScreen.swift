@@ -38,22 +38,80 @@ struct HomeScreen: View {
                     }
                     .padding()
                 }
+                CustomDivider(color: .black, height: 2, padding: 32)
+                
+                VStack(alignment: .leading, content: {
+                    Text("Name")
+                        .fontWeight(.bold)
+                    Text("Description of the profile about Alice. who has been travelled into major state of Ukraine")
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(5)
+                        .frame(width: UIScreen.main.bounds.width * 0.9)
+                })
+                HStack{
+                    NavigationLink(destination: Text("path")) {
+                        Label("Your link name", systemImage: "link")
+                            .font(.system(size: 15, weight: .bold))
+                            .padding()
+                        //.background(Color.gray)
+                            .foregroundColor(.black)
+                            .cornerRadius(8)
+                            .frame(alignment: .leading)
+                    }
+                    Spacer()
+                }
+                CustomDivider(color: .black, height: 2, padding: 32)
+                
+                GrayButton(text: "Professional panel", action: {
+                    //
+                }, width: UIScreen.main.bounds.width * 0.9, height: 40)
                 HStack {
-                    CustomDivider(color: .black, height: 2, padding: 32)
-                    
                     GrayButton(text: "Open profile", action: {
                         navigationVM.pushScreen(route: .editProfile)
                         print("open")
-                    }, width: 150, height: 40)
+                    }, width: UIScreen.main.bounds.width * 0.45, height: 40)
                     GrayButton(text: "Share profile", action: {
                         ProfileSetupScreen()
-                    }, width: 150, height: 40)
+                    }, width: UIScreen.main.bounds.width * 0.45, height: 40)
                 }
-                NavigationLink(destination: ProfileSetupScreen()) {
-                    Text("Edit profile")
-                        .foregroundColor(.blue)
-                        .padding()
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(0..<3) { index in
+                            VStack {
+                                Image(systemName: "star.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .foregroundColor(.yellow)
+                                Text("Post \(index)")
+                                    .font(.headline)
+                            }
+                            .frame(width: 80, height: 80)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                        }
+                        Button(action: {
+                            print("Button tapped")
+                        }) {
+                            VStack {
+                                Image(systemName: "plus.circle.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .foregroundColor(.blue)
+                                Text("Add Post")
+                                    .font(.headline)
+                            }
+                            .frame(width: 80, height: 80)
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .cornerRadius(8)
+                        }
+                    }
+                    .padding()
                 }
+                .frame(height: 120)
+                
                 Spacer()
             }.onAppear {
                 Task {
@@ -61,13 +119,13 @@ struct HomeScreen: View {
                 }
             }
             .navigationDestination(for: NavigationRoute.self) { route in
-                            switch route {
-                            case .editProfile:
-                                ProfileSetupScreen()
-                            default:
-                                EmptyView()
-                            }
-                        }
+                switch route {
+                case .editProfile:
+                    ProfileSetupScreen()
+                default:
+                    EmptyView()
+                }
+            }
         }
     }
 }
