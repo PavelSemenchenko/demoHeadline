@@ -14,6 +14,7 @@ enum NavigationRoute: Hashable {
     case signUp
     case home
     case tabBar
+    case editProfile
 }
 
 class NavigationRouter: ObservableObject {

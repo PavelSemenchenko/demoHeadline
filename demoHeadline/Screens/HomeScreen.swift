@@ -13,7 +13,7 @@ struct HomeScreen: View {
     @EnvironmentObject private var repository: UserRepository
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationVM.currentRoute) {
             VStack {
                 
                 if let userID = authVM.userID {
@@ -38,9 +38,17 @@ struct HomeScreen: View {
                     }
                     .padding()
                 }
-                CustomDivider(color: .black, height: 2, padding: 32)
-                
-                
+                HStack {
+                    CustomDivider(color: .black, height: 2, padding: 32)
+                    
+                    GrayButton(text: "Open profile", action: {
+                        navigationVM.pushScreen(route: .editProfile)
+                        print("open")
+                    }, width: 150, height: 40)
+                    GrayButton(text: "Share profile", action: {
+                        ProfileSetupScreen()
+                    }, width: 150, height: 40)
+                }
                 NavigationLink(destination: ProfileSetupScreen()) {
                     Text("Edit profile")
                         .foregroundColor(.blue)
@@ -52,6 +60,14 @@ struct HomeScreen: View {
                     await repository.getUserInfo()
                 }
             }
+            .navigationDestination(for: NavigationRoute.self) { route in
+                            switch route {
+                            case .editProfile:
+                                ProfileSetupScreen()
+                            default:
+                                EmptyView()
+                            }
+                        }
         }
     }
 }

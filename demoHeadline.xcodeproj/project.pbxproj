@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A100D342C1764B200847EF8 /* ProfileSetupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A100D332C1764B200847EF8 /* ProfileSetupScreen.swift */; };
+		2A3D690B2C2AD34A001F7C93 /* GrayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3D690A2C2AD34A001F7C93 /* GrayButton.swift */; };
 		2A6922932C163C6200968B3B /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6922922C163C6200968B3B /* UserEntity.swift */; };
 		2A6922952C163DEF00968B3B /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6922942C163DEF00968B3B /* UserRepository.swift */; };
 		2A6A03FE2C0F961A001BC675 /* SignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A03FD2C0F961A001BC675 /* SignButton.swift */; };
@@ -91,6 +92,7 @@
 
 /* Begin PBXFileReference section */
 		2A100D332C1764B200847EF8 /* ProfileSetupScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupScreen.swift; sourceTree = "<group>"; };
+		2A3D690A2C2AD34A001F7C93 /* GrayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayButton.swift; sourceTree = "<group>"; };
 		2A6922922C163C6200968B3B /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		2A6922942C163DEF00968B3B /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		2A6A03FD2C0F961A001BC675 /* SignButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignButton.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			children = (
 				2A6A03FD2C0F961A001BC675 /* SignButton.swift */,
 				2A6A043A2C0FA417001BC675 /* EmailTextField.swift */,
+				2A3D690A2C2AD34A001F7C93 /* GrayButton.swift */,
 				2A6A043C2C0FA439001BC675 /* PasswordTextField.swift */,
 			);
 			path = Elements;
@@ -409,6 +412,7 @@
 				2AFD1D642C0D076800C5EAC8 /* SignInScreen.swift in Sources */,
 				2A6922952C163DEF00968B3B /* UserRepository.swift in Sources */,
 				2AFD1D132C0D056F00C5EAC8 /* demoHeadlineApp.swift in Sources */,
+				2A3D690B2C2AD34A001F7C93 /* GrayButton.swift in Sources */,
 				2AFD1D5C2C0D06EB00C5EAC8 /* HomeScreen.swift in Sources */,
 				2AB25AC42C0E550600DAEDC7 /* NavigationRouter.swift in Sources */,
 			);

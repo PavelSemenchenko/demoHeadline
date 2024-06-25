@@ -58,6 +58,11 @@ struct demoHeadlineApp: App {
                                     .environmentObject(navigationVM)
                                     .environmentObject(authVM)
                                     .environmentObject(userRepository)
+                            case .editProfile:
+                                ProfileSetupScreen()
+                                    .environmentObject(navigationVM)
+                                    .environmentObject(authVM)
+                                    .environmentObject(userRepository)
                             }
                         }
                 }.navigationBarBackButtonHidden(true)

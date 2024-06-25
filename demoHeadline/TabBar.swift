@@ -23,14 +23,15 @@ struct TabBar: View {
                     Image(systemName: "house.fill")
                     Text("Home")
                 }
-                .tag(0)
+                .tag(TabBarId.home)
             ProfileSetupScreen()
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Profile")
                 }
-                .tag(1)
+                .tag(TabBarId.profile)
         }.navigationBarBackButtonHidden(true)
+            .environmentObject(navigationVM)
             
     }
 }
