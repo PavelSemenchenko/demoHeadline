@@ -19,6 +19,10 @@ struct HomeScreen: View {
         NavigationStack(path: $navigationVM.currentRoute) {
             ScrollView {
                 VStack {
+                    if isLoading {
+                        Text("zoom")
+                        //ProgressView("Loading...").progressViewStyle(CircularProgressViewStyle())
+                    }
                     
                     if let userID = authVM.userID {
                         Text("User ID: \(userID)")
@@ -209,15 +213,8 @@ struct HomeScreen: View {
                         }
                     }
                     Spacer()
-                }.refreshable {
-                    await refreshData()
                 }
-                .overlay {
-                    if isLoading {
-                        ProgressView("Loading...")
-                            .progressViewStyle(CircularProgressViewStyle())
-                    }
-                }
+                
                 .onAppear {
                     Task {
                         await repository.getUserInfo()
@@ -232,13 +229,23 @@ struct HomeScreen: View {
                         EmptyView()
                     }
                 }
-            }
+            }.refreshable {
+                await refreshData()
+                print("refresh begin")
+            }/*
+            .overlay {
+                if isLoading {
+                    ProgressView("Loading...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                }
+            }*/
         }
     }
     func refreshData() async {
             isLoading = true
             try? await Task.sleep(nanoseconds: 3_000_000_000)  // 2 seconds delay
             await repository.getUserInfo()
+        print("refresf in progress")
             isLoading = false
         }
 }
